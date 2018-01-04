@@ -14,7 +14,7 @@ node('master')
             dir('MinionChat')
             {
                 bat 'nuget restore'
-                bat 'msbuild /t:clean,build MinionChat.csproj'
+                bat 'msbuild /t:clean,build MinionChat.sln'
             }
         } catch(error){
             //slackSendmessage:{env.BUILD_NUMBER} color:'Danger'
@@ -26,7 +26,7 @@ node('master')
             dir('MinionChat')
             {
                 bat 'C:\\Tools\\SonarQube\\SonarQube.Scanner.MSBuild.exe begin /k:jsw204'
-                bat 'msbuild /t:build MinionChat.csproj'
+                bat 'msbuild /t:build MinionChat.sln'
                 bat 'C:\\Tools\\SonarQube\\SonarQube.Scanner.MSBuild.exe end'
             }
         } catch(error){
