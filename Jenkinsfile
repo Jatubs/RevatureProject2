@@ -11,7 +11,11 @@ node('master')
     stage('build')
     {
         try{
-            
+            dir('MinionChat')
+            {
+                bat 'nuget restore'
+                bat 'msbuild /t:clean,build MinionChat.csproj'
+            }
         } catch(error){
             //slackSendmessage:{env.BUILD_NUMBER} color:'Danger'
         }
@@ -19,7 +23,12 @@ node('master')
     stage('analyze')
     {
         try{
-            
+            dir('MinionChat')
+            {
+                bat 'C:\\Tools\\SonarQube\\SonarQube.Scanner.MSBuild.exe begin /k:jsw204'
+                bat 'msbuild /t:build MinionChat.csproj'
+                bat 'C:\\Tools\\SonarQube\\SonarQube.Scanner.MSBuild.exe end'
+            }
         } catch(error){
             //slackSendmessage:{env.BUILD_NUMBER} color:'Danger'
         }
