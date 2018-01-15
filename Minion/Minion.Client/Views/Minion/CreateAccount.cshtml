@@ -1,0 +1,27 @@
+﻿
+@{
+    ViewBag.Title = "CreateAccount";
+}
+
+@model Minion.Client.Models.Users
+
+<div class="jumbotron">
+    <h1>One Of Us, One Of Us!</h1>
+    <p class="lead">Just give us some basic info so we can personalize your experience.</p>
+</div>
+<form action="/Minion/UserHome">
+
+    <p>
+        @Html.LabelFor(m => m.UserName)
+        @Html.TextBoxFor(m => m.UserName)
+    </p>
+    <p>
+        @Html.LabelFor(m => m.Password)
+        @Html.TextBoxFor(m => m.Password)
+    </p>
+    <p>
+        @Html.LabelFor(m => m.Name)
+        @Html.TextBoxFor(m => m.Name)
+    </p>
+    <button class="btn btn-default" type="submit">Create</button>
+</form>

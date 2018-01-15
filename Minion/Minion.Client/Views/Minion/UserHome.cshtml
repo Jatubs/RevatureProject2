@@ -1,0 +1,63 @@
+﻿
+@{
+    ViewBag.Title = "UserHome";
+}
+
+@model Minion.Client.Models.Users
+
+
+<h1>@Html.DisplayTextFor(model => model.UserName)</h1>
+
+    
+<div class="row">
+    <div class="col-md-4">
+        <h3>Friends</h3>
+        <table>
+            <tr>
+                @foreach (var item in Model.Friends)
+            {
+            <tr>
+                <td>
+                    <p><a href="/Minion/MessageFriend"> @Html.DisplayFor(modelItem => item)</a></p>
+                </td>
+            </tr>
+    }
+                </tr>
+            </table>
+        <form action="/Minion/AddFriend">
+
+            </p>Add Friend: @Html.TextBoxFor(m => m.Friend)</p>
+
+            <button type="submit">Add</button>
+        </form>
+            
+            
+        </div>
+    <div class="col-md-4">
+        <h3>Personal</h3>
+        <p>
+            This will be stuff you care about, Maybe?
+        </p>
+    </div>
+    <div class="col-md-4">
+        <h3>Groups</h3>
+        <table>
+            <tr>
+                @foreach (var item in Model.Groups)
+            {
+            <tr>
+                <td>
+                    <p><a href="/Minion/Group"> @Html.DisplayFor(modelItem => item)</a></p>
+                </td>
+            </tr>
+            
+    }
+                </tr>
+
+            </table>
+        <form action="/Minion/AddFriend">
+            </p>Create Group: @Html.TextBoxFor(m => m.Group)</p>
+            <button type="submit">Create</button>
+        </form>
+        </div>
+</div>
