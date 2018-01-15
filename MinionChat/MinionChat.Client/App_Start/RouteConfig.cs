@@ -16,7 +16,7 @@ namespace MinionChat.Client
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "DoMinion", id = UrlParameter.Optional }
+                defaults: new { controller = "Minion", action = "Index", id = UrlParameter.Optional }
             );
         }
     }
