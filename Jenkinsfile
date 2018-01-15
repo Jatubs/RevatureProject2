@@ -59,7 +59,7 @@ node('master'){
                    //  bat 'msbuild /t:pack JenkinsMVC.csproj'
                     //bat 'dotnet publish JenkinsMVC.csproj' --output ../Package'
                    // bat 'dotnet publish JenkinsMVC.csproj -c Release --output ../Package'
-                   bat 'dotnet publish MinionChat.sln -c Release --output ../Package'
+                   bat 'dotnet publish MinionChat.sln -c Release --output ../../Package'
                    
                  }
             }
