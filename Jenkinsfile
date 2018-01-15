@@ -28,7 +28,7 @@ node('master'){
            try{
                //dir('JenkinsMVC'){
                dir('MinionChat'){  
-                   bat 'C:\\Tools\\SonarQube\\SonarQube.Scanner.MSBuild.exe begin /k:k:jsw204'
+                   bat 'C:\\Tools\\SonarQube\\SonarQube.Scanner.MSBuild.exe begin /k:jsw204'
                   // bat 'msbuild /t:build JenkinsMVC.csproj'
                    bat 'msbuild /t:build MinionChat.sln'
                    bat 'C:\\Tools\\SonarQube\\SonarQube.Scanner.MSBuild.exe end'
