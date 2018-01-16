@@ -139,7 +139,5 @@ namespace MinionChat.Library
             }
             return true;
         }
-
-
     }
 }

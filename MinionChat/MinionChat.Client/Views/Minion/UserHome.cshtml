@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "UserHome";
 }
 
@@ -18,20 +17,18 @@
                 {
                 <tr>
                     <td>
-                        <p><a href="/Minion/MessageFriend"> @Html.DisplayFor(modelItem => item)</a></p>
+                        @Html.DisplayFor(modelItem => item)
                     </td>
                 </tr>
             }
                 </tr>
             </table>
-            <form action="/Minion/AddFriend">
-
-                </p>Add Friend: @Html.TextBoxFor(m => m.Friend)</p>
-
-                <button type="submit">Add</button>
+            <form action="/Minion/MessageFriend">
+                </p><button type="submit">Message</button>@Html.TextBoxFor(m => m.Friend)</p>
             </form>
-
-
+            <form action="/Minion/AddFriend">
+                </p><button type="submit">Add</button>@Html.TextBoxFor(m => m.Friend)</p>
+            </form>
         </div>
         <div class="col-md-4">
             <h3>Personal</h3>
@@ -47,17 +44,17 @@
                     {
                     <tr>
                         <td>
-                            <p><a href="/Minion/Groups"> @Html.DisplayFor(modelItem => item)</a></p>
+                            @Html.DisplayFor(modelItem => item)
                         </td>
                     </tr>
-
                 }
                     </tr>
-
                 </table>
+                <form action="/Minion/Groups">
+                    </p><button type="submit">Join</button>@Html.TextBoxFor(m => m.Group)</p>
+                </form>
                 <form action="/Minion/AddGroup">
-                    </p>Create Group: @Html.TextBoxFor(m => m.Group)</p>
-                    <button type="submit">Create</button>
+                    </p><button type="submit">Add</button>@Html.TextBoxFor(m => m.Group)</p>
                 </form>
             </div>
         </div>
