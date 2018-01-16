@@ -1,5 +1,4 @@
 ﻿using Minion.Client.Models;
-using MinionChat.Client.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +9,6 @@ namespace Minion.Client.Controllers
 {
     public class MinionController : Controller
     {
-        
         public ActionResult Index()
         {
             return View();
@@ -41,19 +39,29 @@ namespace Minion.Client.Controllers
             return RedirectToAction("UserHome");
         }
 
-        public ActionResult Groups(Groups group)
+        public ActionResult Groups(Users user)
         {
-            return View(group);
+            return View(user);
         }
 
         public ActionResult AddGroup()
         {
-            return RedirectToAction("Groups");
+            return RedirectToAction("UserHome");
         }
 
-        public ActionResult MessageFriend(Messages message)
+        public ActionResult MessageFriend(Users user)
         {
-            return View();
+            return View(user);
+        }
+
+        public ActionResult MessageMinion(Users user)
+        {
+            return View(user);
+        }
+
+        public ActionResult AddMessage()
+        {
+            return RedirectToAction("Groups");
         }
     }
 }

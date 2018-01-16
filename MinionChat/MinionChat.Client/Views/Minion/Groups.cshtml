@@ -1,44 +1,61 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Groups";
 }
 
-@model Minion.Client.Models.Groups
+@model Minion.Client.Models.Users
 
-<h2>Groups</h2>
+
+<h1>@Html.DisplayTextFor(model => model.Group)</h1>
+
+
 <div class="row">
     <div class="col-md-4">
         <h3>Groups</h3>
         <table>
             <tr>
-                @foreach (var item in Model.Group)
+                @foreach (var item in Model.Groups)
                 {
                 <tr>
                     <td>
-                        <p><a href="/Minion/Groups"> @Html.DisplayFor(modelItem => item)</a></p>
+                        @Html.DisplayFor(modelItem => item)
                     </td>
                 </tr>
-
             }
                 </tr>
-
             </table>
-            <form action="/Minion/AddGroup">
-                </p>Create Group: @Html.TextBoxFor(m => m.GroupName)</p>
-                <button type="submit">Create</button>
+            <form action="/Minion/Groups">
+                </p><button type="submit">Join</button>@Html.TextBoxFor(m => m.Group)</p>
             </form>
         </div>
-        <div class="col-md-4">
-            <h3>Name Of Current Group</h3>
+    <div class="col-md-4">
+        <h3>Chat</h3>
+        <form action="/Minion/AddMessage">
             <p>
-                This will be the chat screen.
+                @Html.LabelFor(m => m.Message)
             </p>
-            <p><a class="btn btn-default" href="/Minion/Post">Post</a></p>
-        </div>
-        <div class="col-md-4">
-            <h3>Users</h3>
             <p>
-                This will be a List of users in the room.
+                @Html.TextAreaFor(m => m.Message)
             </p>
-        </div>
+            <button class="btn btn-default" type="submit">Send</button>
+        </form>
     </div>
+        <div class="col-md-4">
+            <h3>Minions</h3>
+            <table>
+                <tr>
+                    @foreach (var item in Model.Minions)
+                    {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item)
+                        </td>
+                    </tr>
+                }
+                    </tr>
+                </table>
+                <form action="/Minion/MessageMinion">
+                    </p><button type="submit">Message</button>@Html.TextBoxFor(m => m.Minion)</p>
+                </form>
+            </div>
+        </div>
+

@@ -1,15 +1,15 @@
 ﻿
 @{
-    ViewBag.Title = "MessageFriend";
+    ViewBag.Title = "MessageMinion";
 }
 
 @model Minion.Client.Models.Users
 
-<h2>@Html.DisplayTextFor(m => m.Friend)</h2>
+<h2>@Html.DisplayTextFor(m => m.Minion)</h2>
 
-<form action="/Minion/UserHome">
+<form action="/Minion/Groups">
     <p>
-        <h3>@Html.LabelFor(m => m.Message)</h3>
+        @Html.LabelFor(m => m.Message)
     </p>
     <p>
         @Html.TextAreaFor(m => m.Message)
