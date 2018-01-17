@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MinionChat.Library
 {
-    class Message
+    public class Message
     {
         private string messagecontents;
         private string timeofmessage;
