@@ -18,6 +18,10 @@ namespace MinionChat.Library
         private List<User> Friends = new List<User>();
         private List<Group> Groups = new List<Group>();
         #region Getters and Setters
+        User(string nameval = "test")
+        {
+            Name = nameval;
+        }
         public string GetUsername()
         {
             return Username;
@@ -86,6 +90,20 @@ namespace MinionChat.Library
         {
             Friends.Remove(friendtoremove);
         }
+        public void AddToFriendsStr(string friendtoadd)
+        {
+            Friends.Add(new User(friendtoadd));
+        }
+        public void RemoveFriendStr(string friendtoremove)
+        {
+            for (int i = 0; i < Friends.Count; i++)
+            {
+                if (Friends[i].GetName() == friendtoremove)
+                {
+                    Friends.RemoveAt(i);
+                }
+            }
+        }
         public List<Group> GetGroups()
         {
             return Groups;
@@ -101,6 +119,34 @@ namespace MinionChat.Library
                 grouptoadd.AddMember(this);
             }
         }
+        public void AddGroupStr(string grouptoadd)
+        {
+            bool found = false;
+            for (int i = 0; i < Groups.Count; i++)
+            {
+                if (Groups[i].GetName() == grouptoadd)
+                {
+                    //This means it contains it, do nothing
+                    found = true;
+                }
+            }
+            if (!found)
+            {
+                Group testgroup = new Group();
+                testgroup.SetName(grouptoadd);
+                Groups.Add(testgroup);
+            }
+            for (int i = 0; i < Groups.Count; i++)
+            {
+                if (Groups[i].GetName() == grouptoadd)
+                {
+                    if (Groups[i].GetMembers().Contains(this))
+                    {
+                        Groups[i].AddMember(this);
+                    }
+                }
+            }
+        }
         public void RemoveGroup(Group grouptoremove)
         {
             if (Groups.Contains(grouptoremove))
@@ -112,8 +158,22 @@ namespace MinionChat.Library
                 grouptoremove.RemoveMember(this);
             }
         }
-        #endregion
-        public bool Login()
+        public void RemoveGroupStr(string grouptoremove)
+        {
+            for (int i = 0; i < Groups.Count; i++)
+            {
+                if (Groups[i].GetName() == grouptoremove)
+                {
+                    if (Groups[i].GetMembers().Contains(this))
+                    {
+                        Groups[i].RemoveMember(this);
+                    }
+                    Groups.RemoveAt(i);
+                }
+            }
+        }
+            #endregion
+            public bool Login()
         {
             //Do Logon things here
             return false;
@@ -139,7 +199,28 @@ namespace MinionChat.Library
             }
             return true;
         }
+        public bool SendMessageStr(string grouptomessage, string message)
+        {
+            try
+            {
+                for (int i = 0; i < Groups.Count; i++)
+                {
+                    if (Groups[i].GetName() == grouptomessage)
+                    {
+                        Groups[i].AddMessageStr(message);
+                        return true;
+                    }
+                }
+                return false;
+            }
+            catch (Exception)
+            {
 
+                return false;
+            }
+            return true;
+        }
 
     }
 }
+

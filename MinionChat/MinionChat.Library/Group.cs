@@ -58,6 +58,19 @@ namespace MinionChat.Library
         {
             MessageLog.Remove(Message);
         }
+        public void AddMessageStr(string Message)
+        {
+            Message testmess = new Message();
+            testmess.SetMessageContents(Message);
+            MessageLog.Add(testmess);
+        }
+        public void RemoveMessageStr(string Message)
+        {
+            Message testmess = new Message();
+            testmess.SetMessageContents(Message);
+
+            MessageLog.Remove(testmess);
+        }
 
     }
 }
