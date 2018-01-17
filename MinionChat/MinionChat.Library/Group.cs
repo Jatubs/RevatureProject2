@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MinionChat.Library
 {
-    class Group
+    public class Group
     {
         private string Name;
         private List<User> Members = new List<User>();

@@ -1,5 +1,4 @@
 ﻿using Minion.Client.Models;
-using MinionChat.Client.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

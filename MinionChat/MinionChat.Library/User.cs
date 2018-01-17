@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MinionChat.Library
 {
-    class User
+    public class User
     {
         private string Username;
         private string password;
