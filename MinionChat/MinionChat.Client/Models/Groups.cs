@@ -7,7 +7,13 @@ namespace Minion.Client.Models
 {
     public class Groups
     {
-        public string GroupName { get; set; }
-        public List<string> Group = new List<string>() { "This", "That", "The Other" };
+        public string UserName { get; set; }
+        public string Minion { get; set; }
+        public List<string> Minions = new List<string>();
+        public string Group { get; set; }
+        public string NewGroup { get; set; }
+        public List<string> MyGroups = new List<string>();
+        public string Message { get; set; }
+        public List<string> Messages = new List<string>();
     }
 }

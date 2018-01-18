@@ -3,13 +3,13 @@
     ViewBag.Title = "CreateAccount";
 }
 
-@model MinionChat.Client.Models.Users
+@model Minion.Client.Models.Users
 
 <div class="jumbotron">
     <h1>One Of Us, One Of Us!</h1>
     <p class="lead">Just give us some basic info so we can personalize your experience.</p>
 </div>
-<form action="/Minion/UserHome">
+<form action="/Minion/AddUser">
 
     <p>
         @Html.LabelFor(m => m.UserName)

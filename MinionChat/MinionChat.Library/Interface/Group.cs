@@ -10,8 +10,8 @@ namespace MinionChat.Library.Interface
     {
         string Name { get; set; }
         string Message { get; set; }
-        List<User> UserList { get; set; }
-        List<Room> RoomList { get; set; }
+        List<string> UserList { get; set; }
+        List<String> RoomList { get; set; }
 
         void CreateRoom();
         void DeleteRoom();
