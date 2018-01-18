@@ -1,7 +1,10 @@
 ﻿using Minion.Client.Models;
+using MinionChat.Client.Models;
+using MinionChat.Client.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -18,13 +21,37 @@ namespace Minion.Client.Controllers
         {
             return View();
         }
-
-        public ActionResult CreateAccount()
+        [HttpGet]
+        public async Task<ActionResult> CreateAccount()
         {
+
             return View();
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> CreateAccount(UserInfo userinfo)
+        {
 
-        public ActionResult AddUser()
+            try
+            {
+                // TODO: Add insert logic here
+
+               bool x = await Usercontrol.AddUsers(userinfo);
+                if (x == false)
+                {
+                    throw new Exception();
+                }
+                return RedirectToAction("UserHome");
+            }
+            catch (Exception ex)
+            {
+                return View();
+            }
+
+        }
+
+
+        public ActionResult AddUse()
         {
             return RedirectToAction("UserHome");
         }

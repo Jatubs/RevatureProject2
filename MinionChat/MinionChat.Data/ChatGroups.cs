@@ -13,6 +13,7 @@ namespace MinionChat.Data
 
         public int ChatGroupId { get; set; }
         public string Name { get; set; }
+        public bool FriendChat { get; set; }
 
         public ICollection<ChatLog> ChatLog { get; set; }
         public ICollection<GroupMembers> GroupMembers { get; set; }

@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F5F909C8-5927-42D9-B3B7-38560A5DF91B}</ProjectGuid>
+    <ProjectGuid>{17882E57-9400-43BD-AF87-AFBE63F87D6C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MinionChat.Data</RootNamespace>
