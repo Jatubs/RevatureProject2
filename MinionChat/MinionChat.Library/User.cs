@@ -102,7 +102,7 @@ namespace MinionChat.Library
         {
             for (int i = 0; i < Friends.Count; i++)
             {
-                if (Friends[i].GetName() == friendtoremove)
+                if (Friends[i].GetUsername() == friendtoremove)
                 {
                     Friends.RemoveAt(i);
                 }
@@ -176,23 +176,8 @@ namespace MinionChat.Library
                 }
             }
         }
-        #endregion
+#endregion
         public bool Login()
-        {
-            for (int i = 0; i < Groups.Count; i++)
-            {
-                if (Groups[i].GetName() == grouptoremove)
-                {
-                    if (Groups[i].GetMembers().Contains(this))
-                    {
-                        Groups[i].RemoveMember(this);
-                    }
-                    Groups.RemoveAt(i);
-                }
-            }
-        }
-            #endregion
-            public bool Login()
         {
             //Do Logon things here
             return false;
