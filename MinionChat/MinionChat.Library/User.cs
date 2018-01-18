@@ -179,6 +179,21 @@ namespace MinionChat.Library
         #endregion
         public bool Login()
         {
+            for (int i = 0; i < Groups.Count; i++)
+            {
+                if (Groups[i].GetName() == grouptoremove)
+                {
+                    if (Groups[i].GetMembers().Contains(this))
+                    {
+                        Groups[i].RemoveMember(this);
+                    }
+                    Groups.RemoveAt(i);
+                }
+            }
+        }
+            #endregion
+            public bool Login()
+        {
             //Do Logon things here
             return false;
         }
@@ -227,3 +242,4 @@ namespace MinionChat.Library
 
     }
 }
+

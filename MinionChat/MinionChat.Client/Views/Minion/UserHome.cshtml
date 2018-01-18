@@ -29,6 +29,9 @@
             <form action="/Minion/AddFriend">
                 </p><button type="submit">Add</button>@Html.TextBoxFor(m => m.Friend)</p>
             </form>
+            <form action="/Minion/DeleteFriend">
+                </p><button type="submit">Delete</button>@Html.TextBoxFor(m => m.Friend)</p>
+            </form>
         </div>
         <div class="col-md-4">
             <h3>Personal</h3>
@@ -41,13 +44,13 @@
             <table>
                 <tr>
                     @foreach (var item in Model.Groups)
-                    {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item)
-                        </td>
-                    </tr>
-                }
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item)
+                </td>
+            </tr>
+}
                     </tr>
                 </table>
                 <form action="/Minion/GotoGroup">
@@ -55,6 +58,9 @@
                 </form>
                 <form action="/Minion/AddGroup">
                     </p><button type="submit">Add</button>@Html.TextBoxFor(m => m.Group)</p>
+                </form>
+                <form action="/Minion/DeleteGroup">
+                    </p><button type="submit">Delete</button>@Html.TextBoxFor(m => m.Group)</p>
                 </form>
             </div>
         </div>

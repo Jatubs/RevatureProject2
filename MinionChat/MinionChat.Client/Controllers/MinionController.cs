@@ -1,8 +1,10 @@
 ﻿using Minion.Client.Models;
-using MinionChat.Library;
+using MinionChat.Client.Models;
+using MinionChat.Client.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -21,6 +23,11 @@ namespace MinionChat.Client.Controllers
         {
             return View();
         }
+        [HttpGet]
+        public async Task<ActionResult> CreateAccount()
+        {
+            return View();
+        } 
 
         public ActionResult AddLogin(Users user)
         {
@@ -28,13 +35,34 @@ namespace MinionChat.Client.Controllers
             mluser.SetPassword(user.Password);
             return RedirectToAction("UserHome");
         }
+        
+       
 
-        public ActionResult CreateAccount()
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> CreateAccount(UserInfo userinfo)
         {
-            return View();
+
+            try
+            {
+                // TODO: Add insert logic here
+
+               bool x = await Usercontrol.AddUsers(userinfo);
+                if (x == false)
+                {
+                    throw new Exception();
+                }
+                return RedirectToAction("UserHome");
+            }
+            catch (Exception ex)
+            {
+                return View();
+            }
+
         }
 
-        public ActionResult AddUser(Users user)
+
+        public ActionResult AddUse(Users user)
         {
             mluser.SetUsername(user.UserName);
             mluser.SetPassword(user.Password);
@@ -74,6 +102,7 @@ namespace MinionChat.Client.Controllers
 
         public ActionResult AddMinion()
         {
+            mlgroup.MessageLog.RemoveRange(0, mlgroup.GetMessageLog().Count);
             mlgroup.AddMemberStr(mlgroup.GetUsername());
             return RedirectToAction("Groups");
         }
@@ -100,7 +129,7 @@ namespace MinionChat.Client.Controllers
         public ActionResult ChangeGroups(Groups group)
         {
             mlgroup.SetName(group.NewGroup);
-            return RedirectToAction("Groups");
+            return RedirectToAction("AddMinion");
         }
 
         public ActionResult AddGroup(Users user)
@@ -111,7 +140,6 @@ namespace MinionChat.Client.Controllers
 
         public ActionResult MessageFriend(Users user, Groups group)
         {
-            
             mlgroup.SetUsername(user.UserName);
             mlgroup.SetName(user.Friend);
             return RedirectToAction("AddMinion");
@@ -128,6 +156,18 @@ namespace MinionChat.Client.Controllers
         {
             mlgroup.AddMessageStr(group.Message);
             return RedirectToAction("Groups");
+        }
+
+        public ActionResult DeleteFriend(Users user)
+        {
+            mluser.RemoveFriendStr(user.Friend);
+            return RedirectToAction("UserHome");
+        }
+
+        public ActionResult DeleteGroup(Users user)
+        {
+            mluser.RemoveGroupStr(user.Group);
+            return RedirectToAction("UserHome");
         }
     }
 }
