@@ -53,10 +53,6 @@ namespace MinionChat.DataServer.DatabaseConnections
                         UserInfo friend = new UserInfo();
                         friend.UserId = j.UserId;
                         FriendList.Add(friend);
-                        if (j.Friend.Username == FriendUsername)
-                        {
-                            alreadyhasthatfriend = true;
-                        }
                     }
                 }
                 if (i.Username == FriendUsername)
@@ -65,6 +61,19 @@ namespace MinionChat.DataServer.DatabaseConnections
                 }
             }
             foreach (var i in db.Users.ToList())
+            {
+                if (i.Username == Username)
+                {
+                    foreach (var j in i.FriendListUser)
+                    {
+                        if (FriendId == j.FriendId)
+                        {
+                            alreadyhasthatfriend = true;
+                        }
+                    }
+                }
+            }
+                foreach (var i in db.Users.ToList())
             {
                 if (i.Username == Username)
                 {
