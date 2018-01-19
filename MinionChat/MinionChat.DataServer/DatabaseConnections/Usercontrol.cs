@@ -119,7 +119,7 @@ namespace MinionChat.DataServer.DatabaseConnections
                 {
                     alreadyexsits = true;
                 }
-                ListofGroup.Add(NameofGroup);
+                ListofGroup.Add(group.Name);
             }
             if(alreadyexsits == false)
             {
@@ -134,5 +134,131 @@ namespace MinionChat.DataServer.DatabaseConnections
 
             return ListofGroup;
         }
+
+        public async Task<List<string>> RemoveGroup(string NameofGroup)
+        {
+            List<string> ListofGroup = new List<string>();
+
+            ChatGroups ChatGrouptoRemove = new ChatGroups();
+            
+            foreach (var group in db.ChatGroups)// find group to remove
+            {
+                if (group.Name != NameofGroup)
+                {
+                    ListofGroup.Add(group.Name);
+                }
+                else
+                {
+                    ChatGrouptoRemove = group;
+                }
+            }
+
+            foreach (var chatlog in db.ChatLog)
+            {
+                if (chatlog.ChatGroupId == ChatGrouptoRemove.ChatGroupId && ChatGrouptoRemove.Name != null)
+                {
+                    db.ChatLog.Remove(chatlog);
+                }
+            }
+
+            foreach (var groupmember in db.GroupMembers)
+            {
+                if(groupmember.ChatGroupId == ChatGrouptoRemove.ChatGroupId && ChatGrouptoRemove.Name != null)
+                {
+                    db.GroupMembers.Remove(groupmember);
+                }
+            }
+            if (ChatGrouptoRemove.Name != null)
+            {
+                db.ChatGroups.Remove(ChatGrouptoRemove);
+            }
+            await db.SaveChangesAsync();
+
+
+            return ListofGroup;
+        }
+
+        public async Task<List<MessageInfo>> GroupChat(string NameofGroup) //still needs to test after add chat
+        {
+            List<MessageInfo> message = new List<MessageInfo>();
+            int idofgroup = -1;
+            foreach (var group in db.ChatGroups)
+            {
+                if(group.Name == NameofGroup)
+                {
+                    idofgroup = group.ChatGroupId;
+                    break;
+                }
+            }
+            foreach (var chatlog in db.ChatLog)
+            {
+                if(chatlog.ChatGroupId == idofgroup)
+                {
+                    message.Add(new MessageInfo()
+                    {
+                        NameofSender = findUser(chatlog.UserIdofSender),
+                        Message = chatlog.Message,
+                        TimeofMessage = chatlog.TimeofMessage,
+                        NameofGroup = NameofGroup
+                    });
+                }
+            }
+            return message;
+
+            
+        }
+
+        public async void addChatToGroup(string NameofSender, string NameofGroup, string message)
+        {
+            int idofgroup = -1;
+            foreach (var group in db.ChatGroups)
+            {
+                if (group.Name == NameofGroup)
+                {
+                    idofgroup = group.ChatGroupId;
+                    break;
+                }
+            }
+            int IDofSender = findUsersID(NameofSender);
+
+            ChatLog newchatmessage = new ChatLog()
+            {
+                ChatGroupId = idofgroup,
+                Message = message,
+                UserIdofSender = IDofSender,
+                TimeofMessage = DateTime.UtcNow        
+            };
+
+            await db.ChatLog.AddAsync(newchatmessage);
+            await db.SaveChangesAsync();
+
+        }
+
+        public string findUser(int id)
+        {
+            foreach (var user in db.Users)
+            {
+                if(user.UserId == id)
+                {
+                    return user.Username;
+                }
+                
+            }
+            return "UserDoesNotExistAnymore";
+        }
+
+        public int findUsersID(string UserName)
+        {
+            foreach (var user in db.Users)
+            {
+                if(user.Username == UserName)
+                {
+                    
+                    return user.UserId;
+                }
+            }
+            return -1;
+        }
+
     }
 }

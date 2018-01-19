@@ -7,6 +7,10 @@ namespace MinionChat.DataServer.Models
 {
     public class MessageInfo
     {
-        List<string> ChatLog { get; set; }
+
+        public string NameofSender { get; set; }
+        public string Message { get; set; }
+        public DateTime TimeofMessage { get; set; }
+        public string NameofGroup { get; set; }
     }
 }

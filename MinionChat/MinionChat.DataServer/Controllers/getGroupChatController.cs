@@ -13,17 +13,17 @@ namespace MinionChat.DataServer.Controllers
 {
 
     //[Produces("application/json")]
-    [Route("api/RemoveGroup")]
-    public class RemoveGroupController : ApiController
+    [Route("api/getGroupChat")]
+    public class getGroupChatController : ApiController
     {
 
         // POST api/values
         [HttpPost]
-        public async Task<List<string>> RemoveGroup(GroupInfo GroupName)
+        public async Task<List<MessageInfo>> GetGroupChat(GroupInfo GroupName)
         {
             var x = new Usercontrol();
-            List<string> ListofGroup = await x.RemoveGroup(GroupName.Name);
-            return ListofGroup;
+            List<MessageInfo> ListofChat = await x.GroupChat(GroupName.Name);
+            return ListofChat;
         }
 
     }
