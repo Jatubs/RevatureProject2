@@ -108,6 +108,30 @@ namespace MinionChat.DataServer.DatabaseConnections
             return FriendList;
         }
 
-     //   public async Task<List<Message>> FriendChat()
+        public async Task<List<string>> AddGroup(string NameofGroup)
+        {
+            List<string> ListofGroup = new List<string>();
+            bool alreadyexsits = false;
+            foreach (var group in db.ChatGroups)
+            {
+                if(group.Name == NameofGroup)
+                {
+                    alreadyexsits = true;
+                }
+                ListofGroup.Add(NameofGroup);
+            }
+            if(alreadyexsits == false)
+            {
+                ListofGroup.Add(NameofGroup);
+
+                ChatGroups newChatgroup = new ChatGroups() { FriendChat = false, Name = NameofGroup };
+                await db.ChatGroups.AddAsync((newChatgroup));
+                await db.SaveChangesAsync();
+            }
+            
+
+
+            return ListofGroup;
+        }
     }
 }
