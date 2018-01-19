@@ -42,6 +42,8 @@ namespace MinionChat.DataServer.DatabaseConnections
             int UserId = 0;
             int FriendId = 0;
             List<UserInfo> FriendList = new List<UserInfo>();
+            List<int> FriendIds = new List<int>();
+            //Get the ID's for both the User and their Friend
             foreach (var i in db.Users.ToList())
             {
                 if (i.Username == Username)
@@ -53,6 +55,7 @@ namespace MinionChat.DataServer.DatabaseConnections
                     FriendId = i.UserId;
                 }
             }
+            //Make sure the User has that friend
             foreach (var i in db.FriendList.ToList())
             {
                 if (i.UserId == UserId)
@@ -63,24 +66,28 @@ namespace MinionChat.DataServer.DatabaseConnections
                     }
                 }
             }
+            //Find the user in the list again, and if they have that friend, go ahead and remove them from both lists.
             foreach (var i in db.Users.ToList())
             {
                 if (i.Username == Username)
                 {
                     if (alreadyhasthatfriend)
                     {
-                        foreach (var j in i.FriendListUser)
+                        foreach (var j in db.FriendList)
                         {
                             if (j.UserId == UserId)
                             {
-                                i.FriendListUser.Remove(j);
+                                if (j.FriendId == FriendId)
+                                {
+                                    db.FriendList.Remove(j);
+                                }
                             }
-                        }
-                        foreach (var j in i.FriendListFriend)
-                        {
                             if (j.UserId == FriendId)
                             {
-                                i.FriendListFriend.Remove(j);
+                                if (j.FriendId == UserId)
+                                {
+                                    db.FriendList.Remove(j);
+                                }
                             }
                         }
                         await db.SaveChangesAsync();
@@ -91,23 +98,21 @@ namespace MinionChat.DataServer.DatabaseConnections
             {
                 if (i.UserId == UserId)
                 {
-                    UserInfo friend = new UserInfo();
-                    friend.UserId = i.FriendId;
-                    FriendList.Add(friend);
-                }
-            }
-            foreach (var i in db.Users.ToList())
-            {
-                for (int j = 0; j < FriendList.Count; j++)
-                {
-                    if (FriendList[j].UserId == i.UserId)
+                    foreach (var j in db.Users.ToList())
                     {
-                        FriendList[j].Username = i.Username;
-                        FriendList[j].Name = i.Name;
-                        FriendList[j].Password = i.Password;
+                        if (i.FriendId == j.UserId)
+                        {
+                            UserInfo friend = new UserInfo();
+                            friend.UserId = FriendId;
+                            friend.Username = j.Username;
+                            friend.Password = j.Password;
+                            friend.Name = j.Name;
+                            FriendList.Add(friend);
+                        }
                     }
                 }
             }
+           
             return FriendList;
         }
         public async Task<List<UserInfo>> AddFriend(string Username, string FriendUsername)
@@ -139,9 +144,6 @@ namespace MinionChat.DataServer.DatabaseConnections
                     {
                         alreadyhasthatfriend = true;
                     }
-                    UserInfo friend = new UserInfo();
-                    friend.UserId = i.FriendId;
-                    FriendList.Add(friend);
                 }
             }
             foreach (var i in db.Users.ToList())
@@ -157,22 +159,28 @@ namespace MinionChat.DataServer.DatabaseConnections
                         newfl.FriendId = FriendId;
                         newfl2.UserId = FriendId;
                         newfl2.FriendId = UserId;
-                        i.FriendListUser.Add(newfl);
-                        i.FriendListFriend.Add(newfl2);
+                        db.FriendList.Add(newfl);
+                        db.FriendList.Add(newfl2);
 
                         await db.SaveChangesAsync();
                     }
                 }
             }
-            foreach (var i in db.Users.ToList())
+            foreach (var i in db.FriendList.ToList())
             {
-                for (int j = 0; j < FriendList.Count; j++)
+                if (i.UserId == UserId)
                 {
-                    if (FriendList[j].UserId == i.UserId)
+                    foreach (var j in db.Users.ToList())
                     {
-                        FriendList[j].Username = i.Username;
-                        FriendList[j].Name = i.Name;
-                        FriendList[j].Password = i.Password;
+                        if (i.FriendId == j.UserId)
+                        {
+                            UserInfo friend = new UserInfo();
+                            friend.UserId = FriendId;
+                            friend.Username = j.Username;
+                            friend.Password = j.Password;
+                            friend.Name = j.Name;
+                            FriendList.Add(friend);
+                        }
                     }
                 }
             }
@@ -185,13 +193,13 @@ namespace MinionChat.DataServer.DatabaseConnections
             bool alreadyexsits = false;
             foreach (var group in db.ChatGroups)
             {
-                if(group.Name == NameofGroup)
+                if (group.Name == NameofGroup)
                 {
                     alreadyexsits = true;
                 }
                 ListofGroup.Add(NameofGroup);
             }
-            if(alreadyexsits == false)
+            if (alreadyexsits == false)
             {
                 ListofGroup.Add(NameofGroup);
 
@@ -199,7 +207,7 @@ namespace MinionChat.DataServer.DatabaseConnections
                 await db.ChatGroups.AddAsync((newChatgroup));
                 await db.SaveChangesAsync();
             }
-            
+
 
 
             return ListofGroup;

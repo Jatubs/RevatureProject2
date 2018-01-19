@@ -23,7 +23,7 @@ namespace MinionChat.DataServer.Controllers
         {
             var uc = new Usercontrol();
             List<string> listoffriend = new List<string>();
-            List<UserInfo> ListofUserInfo = await uc.AddFriend(friendtoremove.Username, friendtoremove.Friendname);
+            List<UserInfo> ListofUserInfo = await uc.RemoveFriend(friendtoremove.Username, friendtoremove.Friendname);
             foreach (var userinfo in ListofUserInfo)
             {
                 listoffriend.Add(userinfo.Username);
