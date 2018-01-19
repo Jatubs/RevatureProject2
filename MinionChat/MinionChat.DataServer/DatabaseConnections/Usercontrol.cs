@@ -36,10 +36,80 @@ namespace MinionChat.DataServer.DatabaseConnections
 
             return true;
         }
-        ////public async Task<List<UserInfo>> RemoveFriend(string Username, string FriendUsername)
-        //{
-
-        //}
+        public async Task<List<UserInfo>> RemoveFriend(string Username, string FriendUsername)
+        {
+            bool alreadyhasthatfriend = false;
+            int UserId = 0;
+            int FriendId = 0;
+            List<UserInfo> FriendList = new List<UserInfo>();
+            foreach (var i in db.Users.ToList())
+            {
+                if (i.Username == Username)
+                {
+                    UserId = i.UserId;
+                }
+                if (i.Username == FriendUsername)
+                {
+                    FriendId = i.UserId;
+                }
+            }
+            foreach (var i in db.FriendList.ToList())
+            {
+                if (i.UserId == UserId)
+                {
+                    if (i.FriendId == FriendId)
+                    {
+                        alreadyhasthatfriend = true;
+                    }
+                }
+            }
+            foreach (var i in db.Users.ToList())
+            {
+                if (i.Username == Username)
+                {
+                    if (alreadyhasthatfriend)
+                    {
+                        foreach (var j in i.FriendListUser)
+                        {
+                            if (j.UserId == UserId)
+                            {
+                                i.FriendListUser.Remove(j);
+                            }
+                        }
+                        foreach (var j in i.FriendListFriend)
+                        {
+                            if (j.UserId == FriendId)
+                            {
+                                i.FriendListFriend.Remove(j);
+                            }
+                        }
+                        await db.SaveChangesAsync();
+                    }
+                }
+            }
+            foreach (var i in db.FriendList.ToList())
+            {
+                if (i.UserId == UserId)
+                {
+                    UserInfo friend = new UserInfo();
+                    friend.UserId = i.FriendId;
+                    FriendList.Add(friend);
+                }
+            }
+            foreach (var i in db.Users.ToList())
+            {
+                for (int j = 0; j < FriendList.Count; j++)
+                {
+                    if (FriendList[j].UserId == i.UserId)
+                    {
+                        FriendList[j].Username = i.Username;
+                        FriendList[j].Name = i.Name;
+                        FriendList[j].Password = i.Password;
+                    }
+                }
+            }
+            return FriendList;
+        }
         public async Task<List<UserInfo>> AddFriend(string Username, string FriendUsername)
         {
             bool alreadyhasthatfriend = false;
