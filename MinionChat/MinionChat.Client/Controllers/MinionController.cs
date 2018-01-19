@@ -31,7 +31,7 @@ namespace Minion.Client.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> CreateAccount(UserInfo userinfo)
         {
-
+            
             try
             {
                 // TODO: Add insert logic here
