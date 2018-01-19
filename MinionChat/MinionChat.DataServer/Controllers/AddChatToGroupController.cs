@@ -22,7 +22,7 @@ namespace MinionChat.DataServer.Controllers
         public async void AddChatGroup(MessageInfo message)
         {
             var x = new Usercontrol();
-            x.addChatToGroup(message.NameofSender,message.NameofGroup,message.Message);
+            bool waiting = await x.addChatToGroup(message.NameofSender,message.NameofGroup,message.Message);
             
         }
 

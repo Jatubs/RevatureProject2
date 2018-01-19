@@ -286,7 +286,7 @@ namespace MinionChat.DataServer.DatabaseConnections
             
         }
 
-        public async void addChatToGroup(string NameofSender, string NameofGroup, string message)
+        public async Task<bool> addChatToGroup(string NameofSender, string NameofGroup, string message)
         {
             int idofgroup = -1;
             foreach (var group in db.ChatGroups)
@@ -309,7 +309,7 @@ namespace MinionChat.DataServer.DatabaseConnections
 
             await db.ChatLog.AddAsync(newchatmessage);
             await db.SaveChangesAsync();
-
+            return true;
         }
 
         public string findUser(int id)
