@@ -1,4 +1,4 @@
-﻿------------api/getGroupChat  ------ gives list of messages 
+﻿------------api/getGroupChat  ------ gives list of messages USE http://minionchatrestapi.azurewebsites.net/    <- ADD API ROUTE
 input GroupInfo						             IMPORTANT PROPERTY NAME NEEDS TO MATCH 
 
 	string Name
