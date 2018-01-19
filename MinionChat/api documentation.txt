@@ -1,0 +1,70 @@
+------------api/getGroupChat  ------ gives list of messages 
+input GroupInfo						   IMPORTANT PROPERTY NAME NEEDS TO MATCH 
+
+	string Name
+
+output List<MessageInfo>
+
+	string NameofSender { get; set; }
+        string Message { get; set; }
+        DateTime TimeofMessage { get; set; }
+        string NameofGroup { get; set; }
+
+--------------api/AddChatToGroup----- Adds chat to message in datbase you need to add to chatlist of your ui
+input List<MessageInfo>
+
+	string NameofSender { get; set; }
+        string Message { get; set; }
+        DateTime TimeofMessage { get; set; }      <- dont need to fill out can leave it empty when you send
+        string NameofGroup { get; set; }
+	
+output 
+	void
+
+-------------api/AddFriend---------- adds friend and gives back updated list of string for friend
+input UsernameandFriendname
+	
+        public string Username { get; set; }
+        public string Friendname { get; set; }
+
+output 
+	List<string>
+
+--------------api/addGroup-------- adds group and gives back updated list of string for group
+input GroupInfo						    
+
+	string Name
+
+output 
+	List<string>
+
+----------api/RemoveFriend------- removes friend and gives back updated list of string for friend
+input UsernameandFriendname
+	
+        public string Username { get; set; }
+        public string Friendname { get; set; }
+
+output 
+	List<string>
+
+
+----------api/RemoveGroup------- removes group and gives back updated list of string for group
+input GroupInfo						    
+
+	string Name
+
+output 
+	List<string>
+
+
+
+
+
+
+
+
+
+
+
+
+
