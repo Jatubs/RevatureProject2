@@ -8,19 +8,23 @@ namespace MinionChat.Library
 {
     public class User
     {
-        private string Username;
+        public string Username;
         private string password;
         private string Name;
         private string Email;
         //Offline, Online, Away, Etc...
         private string Status;
         private bool active;
-        private List<User> Friends = new List<User>();
-        private List<Group> Groups = new List<Group>();
+        public List<User> Friends = new List<User>();
+        public List<Group> Groups = new List<Group>();
         #region Getters and Setters
-        User(string nameval = "test")
+        public User()
         {
-            Name = nameval;
+            
+        }
+        public User(string nameval = "test")
+        {
+            Username = nameval;
         }
         public string GetUsername()
         {
@@ -98,7 +102,7 @@ namespace MinionChat.Library
         {
             for (int i = 0; i < Friends.Count; i++)
             {
-                if (Friends[i].GetName() == friendtoremove)
+                if (Friends[i].GetUsername() == friendtoremove)
                 {
                     Friends.RemoveAt(i);
                 }
@@ -140,7 +144,7 @@ namespace MinionChat.Library
             {
                 if (Groups[i].GetName() == grouptoadd)
                 {
-                    if (Groups[i].GetMembers().Contains(this))
+                    if (!Groups[i].GetMembers().Contains(this))
                     {
                         Groups[i].AddMember(this);
                     }
@@ -172,8 +176,8 @@ namespace MinionChat.Library
                 }
             }
         }
-            #endregion
-            public bool Login()
+#endregion
+        public bool Login()
         {
             //Do Logon things here
             return false;
