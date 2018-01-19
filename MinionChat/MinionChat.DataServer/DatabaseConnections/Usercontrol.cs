@@ -98,5 +98,7 @@ namespace MinionChat.DataServer.DatabaseConnections
             }
             return FriendList;
         }
+
+     //   public async Task<List<Message>> FriendChat()
     }
 }
