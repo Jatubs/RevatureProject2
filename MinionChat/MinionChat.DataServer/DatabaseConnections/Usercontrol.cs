@@ -11,7 +11,7 @@ namespace MinionChat.DataServer.DatabaseConnections
     public class Usercontrol
     {
 
-        private Project2Context db = new Project2Context();
+        private static Project2Context db = new Project2Context();
 
         public async Task<bool> AddUser(UserInfo user)
         {
@@ -36,44 +36,45 @@ namespace MinionChat.DataServer.DatabaseConnections
 
             return true;
         }
+        ////public async Task<List<UserInfo>> RemoveFriend(string Username, string FriendUsername)
+        //{
 
+        //}
         public async Task<List<UserInfo>> AddFriend(string Username, string FriendUsername)
         {
             bool alreadyhasthatfriend = false;
             int UserId = 0;
             int FriendId = 0;
             List<UserInfo> FriendList = new List<UserInfo>();
+            if (Username == FriendUsername)
+            {
+                alreadyhasthatfriend = true;
+            }
             foreach (var i in db.Users.ToList())
             {
                 if (i.Username == Username)
                 {
                     UserId = i.UserId;
-                    foreach (var j in i.FriendListUser)
-                    {
-                        UserInfo friend = new UserInfo();
-                        friend.UserId = j.UserId;
-                        FriendList.Add(friend);
-                    }
                 }
                 if (i.Username == FriendUsername)
                 {
                     FriendId = i.UserId;
                 }
             }
-            foreach (var i in db.Users.ToList())
+            foreach (var i in db.FriendList.ToList())
             {
-                if (i.Username == Username)
+                if (i.UserId == UserId)
                 {
-                    foreach (var j in i.FriendListUser)
+                    if (i.FriendId == FriendId)
                     {
-                        if (FriendId == j.FriendId)
-                        {
-                            alreadyhasthatfriend = true;
-                        }
+                        alreadyhasthatfriend = true;
                     }
+                    UserInfo friend = new UserInfo();
+                    friend.UserId = i.FriendId;
+                    FriendList.Add(friend);
                 }
             }
-                foreach (var i in db.Users.ToList())
+            foreach (var i in db.Users.ToList())
             {
                 if (i.Username == Username)
                 {
