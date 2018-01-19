@@ -36,5 +36,7 @@ namespace MinionChat.DataServer.DatabaseConnections
 
             return true;
         }
+
+
     }
 }
