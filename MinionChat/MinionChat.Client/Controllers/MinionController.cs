@@ -98,7 +98,8 @@ namespace MinionChat.Client.Controllers
             }
             newfriend.Friendname = user.Friend;
             List<string> temp = new List<string>();
-            currentUser.Friends = await Usercontrol.Addfriend(newfriend);
+            List<UserInfo> temp2 = new List<UserInfo>();
+            temp2 = await Usercontrol.Addfriend(newfriend);
             for (int i = 0; i < temp.Count; i++)
             {
                 mluser.Friends.Add(new Library.User(currentUser.Friends[i]));
