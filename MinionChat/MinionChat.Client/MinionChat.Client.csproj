@@ -259,6 +259,7 @@
     <Content Include="Views\Minion\MessageFriend.cshtml" />
     <Content Include="Views\Minion\MessageMinion.cshtml" />
     <Content Include="Views\Minion\CreateAccount.cshtml" />
+    <Content Include="Views\Minion\GroupsFriend.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
