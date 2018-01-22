@@ -13,7 +13,7 @@ namespace MinionChat.DataServer.Controllers
 {
 
     //[Produces("application/json")]
-    [Route("api/getGroupChat")]
+    [Route("api/getFriendChat")]
     public class getFriendChatController : ApiController
     {
 

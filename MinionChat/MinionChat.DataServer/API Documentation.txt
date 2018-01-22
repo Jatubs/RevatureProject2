@@ -11,7 +11,7 @@ output List<MessageInfo>
         string NameofGroup { get; set; }
 
 --------------api/AddChatToGroup----- Adds chat to message in datbase you need to add to chatlist of your ui
-input List<MessageInfo>
+input MessageInfo
 
 	string NameofSender { get; set; }
         string Message { get; set; }
@@ -19,7 +19,7 @@ input List<MessageInfo>
         string NameofGroup { get; set; }
 	
 output 
-	void
+	bool
 
 -------------api/AddFriend---------- adds friend and gives back updated list of string for friend
 input UsernameandFriendname
@@ -58,7 +58,41 @@ output
 
 
 
+-=--------api/Login--------------
+input UserInfo
 
+		public int UserId { get; set; }
+        public string Username { get; set; }    <----------   TestThatsOnDB =>>> username: we password: hi
+        public string Password { get; set; }    <----------- just need those 2
+        public string Name { get; set; }
+
+output 
+		bool
+	
+-------api/AddChatToFriend------------
+input MessageInfo
+
+	string NameofSender { get; set; }
+        string Message { get; set; }
+        DateTime TimeofMessage { get; set; }      <- dont need to fill out can leave it empty when you send
+        string NameofGroup { get; set; }          <------- need to make it Username+FriendName for friend chat
+	
+output 
+	bool
+	 Task<List<MessageInfo>> GetFriendChat(UsernameandFriendname friendtochat)
+        
+--------api/getFriendChat----------
+input UsernameandFriendname
+	
+        public string Username { get; set; }
+        public string Friendname { get; set; }
+
+output  List<MessageInfo>
+
+		string NameofSender { get; set; }
+        string Message { get; set; }
+        DateTime TimeofMessage { get; set; }      <- dont need to fill out can leave it empty when you send
+        string NameofGroup { get; set; }
 
 
 
