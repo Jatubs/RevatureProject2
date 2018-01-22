@@ -19,11 +19,11 @@ namespace MinionChat.DataServer.Controllers
 
         // POST api/values
         [HttpPost]
-        public async void AddChatGroup(MessageInfo message)
+        public async Task<bool> AddChatGroup(MessageInfo message)
         {
             var x = new Usercontrol();
             bool waiting = await x.addChatToGroup(message.NameofSender,message.NameofGroup,message.Message);
-            
+            return waiting;
         }
 
     }
