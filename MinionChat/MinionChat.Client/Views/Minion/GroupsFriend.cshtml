@@ -52,23 +52,6 @@
                     <button class="btn btn-default" type="submit">Send</button>
                 </form>
             </div>
-            <div class="col-md-4">
-                <h3>Minions</h3>
-                <table>
-                    <tr>
-                        @foreach (var item in Model.Minions)
-                        {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item)
-                            </td>
-                        </tr>
-                    }
-                        </tr>
-                    </table>
-                    <form action="/Minion/MessageMinion">
-                        </p><button type="submit">Message</button>@Html.TextBoxFor(m => m.Minion)</p>
-                    </form>
-                </div>
-            </div>
+     
+           </div>
 

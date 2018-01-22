@@ -11,10 +11,8 @@ namespace MinionChat.Client.Controllers
 {
     public class MinionController : Controller
     {
-        static MinionChat.Library.User mluser = new MinionChat.Library.User();
-        static MinionChat.Library.Group mlgroup = new MinionChat.Library.Group();
-        static Users currentUser = new Users();
-        static Groups Globalgroup = new Groups();
+         static Users currentUser = new Users();
+         static Groups Globalgroup = new Groups();
         public ActionResult Index()
         {
             return View();
@@ -91,14 +89,7 @@ namespace MinionChat.Client.Controllers
         }
 
 
-        public ActionResult AddUse(Users user)
-        {
-            mluser.SetUsername(user.UserName);
-            mluser.SetPassword(user.Password);
-            mluser.SetName(user.Name);
-            return RedirectToAction("UserHome");
-        }
-
+   
         public ActionResult UserHome(Users userswithlist)
         {
         
@@ -126,7 +117,6 @@ namespace MinionChat.Client.Controllers
             currentUser.Friends.Clear();
             for (int i = 0; i < temp2.Count; i++)
             {
-                mluser.Friends.Add(new Library.User(temp2[i].Username));
                 currentUser.Friends.Add(temp2[i].Username);
 
             }
@@ -163,13 +153,7 @@ namespace MinionChat.Client.Controllers
             else return RedirectToAction("UserHome");
         }
 
-        public ActionResult AddMinion()
-        {
-            mlgroup.MessageLog.RemoveRange(0, mlgroup.GetMessageLog().Count);
-            mlgroup.AddMemberStr(mlgroup.GetUsername());
-            return RedirectToAction("Groups");
-        }
-
+    
         public async Task<ActionResult> Groups(Groups group)
         {
             List<MessageInfo> message = await Usercontrol.GetGroupChat(new NameModel() { Name = currentUser.Group });
@@ -241,13 +225,7 @@ namespace MinionChat.Client.Controllers
         }
         
         //__________________________
-            public ActionResult MessageMinion(Groups group)
-        {
-            
-            mlgroup.SetName(group.Minion);
-            return RedirectToAction("AddMinion");
-        }
-
+        
         public async Task<ActionResult> AddMessage(Groups group)
         {
             //mlgroup.AddMessageStr(group.Message);
@@ -289,7 +267,6 @@ namespace MinionChat.Client.Controllers
 
             for (int i = 0; i < temp2.Count; i++)
             {
-                mluser.Friends.Add(new Library.User(temp2[i]));
                 currentUser.Friends.Add(temp2[i]);
             }
             return RedirectToAction("UserHome");
