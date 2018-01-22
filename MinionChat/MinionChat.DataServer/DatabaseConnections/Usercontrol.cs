@@ -349,8 +349,15 @@ namespace MinionChat.DataServer.DatabaseConnections
                     break;
                 }
             }
+            if( idofgroup == -1)
+            {
+                return false;
+            }
             int IDofSender = findUsersID(NameofSender);
-
+            if(IDofSender == -1)
+            {
+                return false;
+            }
             ChatLog newchatmessage = new ChatLog()
             {
                 ChatGroupId = idofgroup,
@@ -358,7 +365,7 @@ namespace MinionChat.DataServer.DatabaseConnections
                 UserIdofSender = IDofSender,
                 TimeofMessage = DateTime.UtcNow        
             };
-
+            
             await db.ChatLog.AddAsync(newchatmessage);
             await db.SaveChangesAsync();
             return true;
