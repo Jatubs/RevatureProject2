@@ -19,16 +19,16 @@ namespace MinionChat.DataServer.Controllers
 
         // POST api/values
         [HttpPost]
-        public async Task<List<string>> AddFriend(UsernameandFriendname friendtoadd)
+        public async Task<List<UserInfo>> AddFriend(UsernameandFriendname friendtoadd)
         {
             var uc = new Usercontrol();
             List<string> listoffriend = new List<string>();
             List<UserInfo> ListofUserInfo = await uc.AddFriend(friendtoadd.Username, friendtoadd.Friendname);
-            foreach (var userinfo in ListofUserInfo)
-            {
-                listoffriend.Add(userinfo.Username);
-            }
-            return listoffriend;
+            //foreach (var userinfo in ListofUserInfo)
+            //{
+            //    listoffriend.Add(userinfo.Username);
+            //}
+            return ListofUserInfo;
           //  return await x.AddUser(user);
         }
         //[HttpGet]
