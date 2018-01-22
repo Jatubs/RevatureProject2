@@ -306,6 +306,7 @@ namespace MinionChat.DataServer.DatabaseConnections
             {
                 if (group.Name != NameofGroup)
                 {
+                    if(group.FriendChat == false)
                     ListofGroup.Add(group.Name);
                 }
                 else
