@@ -99,6 +99,7 @@ namespace MinionChat.Client.Controllers
             newfriend.Friendname = user.Friend;
             List<string> temp = new List<string>();
             List<UserInfo> temp2 = new List<UserInfo>();
+
             temp2 = await Usercontrol.Addfriend(newfriend);
             for (int i = 0; i < temp.Count; i++)
             {
@@ -175,9 +176,23 @@ namespace MinionChat.Client.Controllers
             return RedirectToAction("AddMinion");
         }
 
-        public ActionResult AddMessage(Groups group)
+        public async Task<ActionResult> AddMessage(Groups group)
         {
-            mlgroup.AddMessageStr(group.Message);
+            //mlgroup.AddMessageStr(group.Message);
+            group.Messages.Add(new MessageInfo()
+            {
+                Message = group.Message,
+                NameofSender = currentUser.UserName,
+                NameofGroup = currentUser.Group,
+                TimeofMessage = DateTime.Now
+                
+            });
+            await Usercontrol.AddChatToGroup(new MessageInfo()
+            {
+                Message = group.Message,
+                NameofSender = currentUser.UserName,
+                NameofGroup = currentUser.Group
+            });
             return RedirectToAction("Groups");
         }
 
