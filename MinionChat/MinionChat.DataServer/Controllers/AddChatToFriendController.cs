@@ -19,7 +19,7 @@ namespace MinionChat.DataServer.Controllers
 
         // POST api/values
         [HttpPost]
-        public async Task<bool> AddChatFriend(MessageInfo message)
+        public async Task<bool> AddChatFriend(MessageInfo message) /// makesure friend name gets through
         {
             var x = new Usercontrol();
             bool waiting = await x.addChatToFriend(message.NameofSender,message.NameofGroup,message.Message);

@@ -408,6 +408,12 @@ namespace MinionChat.DataServer.DatabaseConnections
 
         public async Task<bool> addChatToFriend(string NameofSender, string NameofFriend, string message)
         {
+            int IDofSender = findUsersID(NameofSender);
+            if (IDofSender == -1)
+            {
+                return false;
+            }
+
             int idofgroup = -1;
             foreach (var group in db.ChatGroups)
             {
@@ -417,15 +423,16 @@ namespace MinionChat.DataServer.DatabaseConnections
                     break;
                 }
             }
+
             if (idofgroup == -1)
             {
-                return false;
+                ChatGroups newfriendgroup = new ChatGroups() { Name = NameofSender + NameofFriend, FriendChat = true };
+                await db.ChatGroups.AddAsync(newfriendgroup);
+                await db.SaveChangesAsync();
             }
-            int IDofSender = findUsersID(NameofSender);
-            if (IDofSender == -1)
-            {
-                return false;
-            }
+
+            idofgroup = db.ChatGroups.LastOrDefault().ChatGroupId;
+            
             ChatLog newchatmessage = new ChatLog()
             {
                 ChatGroupId = idofgroup,

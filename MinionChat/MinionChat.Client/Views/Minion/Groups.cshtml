@@ -2,7 +2,7 @@
     ViewBag.Title = "Groups";
 }
 
-@model Minion.Client.Models.Groups
+@model MinionChat.Client.Models.Groups
 
 
 <h1>@Html.DisplayTextFor(model => model.Group)</h1>
@@ -35,7 +35,9 @@
         {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item)
+                <strong> @Html.DisplayFor(modelItem => item.NameofSender) : <br /></strong>
+                @Html.DisplayFor(modelItem => item.Message)<br />
+                @Html.DisplayFor(modelItem => item.TimeofMessage)<br />
             </td>
         </tr>
 }

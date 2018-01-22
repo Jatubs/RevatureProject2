@@ -60,7 +60,7 @@ namespace MinionChat.Client.Controllers
                 bool x = await Usercontrol.AddUsers(userinfo);
                 if (x == false)
                 {
-                    throw new Exception();
+                    return View();
                 }
                 return RedirectToAction("UserHome");
             }
@@ -92,38 +92,45 @@ namespace MinionChat.Client.Controllers
             return RedirectToAction("UserHome");
         }
 
-        public ActionResult GotoGroup(Users user)
+        public ActionResult GotoGroup(Users user) // join group
         {
-            mlgroup.SetName(user.Group);
-            mlgroup.SetUsername(mluser.Username);
-            mlgroup.Groups = mluser.Groups;
-          
-            return RedirectToAction("AddMinion");
-        }
+            //mlgroup.SetName(user.Group);
+            //mlgroup.SetUsername(mluser.Username);
+            //mlgroup.Groups = mluser.Groups;
 
-        public ActionResult AddMinion()
-        {
-            mlgroup.MessageLog.RemoveRange(0, mlgroup.GetMessageLog().Count);
-            mlgroup.AddMemberStr(mlgroup.GetUsername());
+            currentUser.Group = user.Group;
+     //       await Usercontrol.AddGroup()
             return RedirectToAction("Groups");
         }
 
-        public ActionResult Groups(Groups group)
+        //public ActionResult AddMinion()
+        //{
+        //    mlgroup.MessageLog.RemoveRange(0, mlgroup.GetMessageLog().Count);
+        //    mlgroup.AddMemberStr(mlgroup.GetUsername());
+        //    return RedirectToAction("Groups");
+        //}
+
+        public async Task<ActionResult> Groups(Groups group)
         {
-            group.Group = mlgroup.GetName();
-            for (int j = 0; j < mluser.GetGroups().Count; j++)
-            {
-                group.MyGroups.Add(mluser.Groups[j].GetName());
-            }
-            group.UserName = mlgroup.GetUsername();
-            for (int k = 0; k < mlgroup.GetMembers().Count; k++)
-            {
-                group.Minions.Add(mlgroup.Members[k].GetName());
-            }
-            for (int l = 0; l < mlgroup.GetMessageLog().Count; l++)
-            {
-                group.Messages.Add(mlgroup.MessageLog[l].GetMessageContents());
-            }
+            //group.Group = mlgroup.GetName();
+            //for (int j = 0; j < mluser.GetGroups().Count; j++)
+            //{
+            //    group.MyGroups.Add(mluser.Groups[j].GetName());
+            //}
+            //group.UserName = mlgroup.GetUsername();
+            //for (int k = 0; k < mlgroup.GetMembers().Count; k++)
+            //{
+            //    group.Minions.Add(mlgroup.Members[k].GetName());
+            //}
+            //for (int l = 0; l < mlgroup.GetMessageLog().Count; l++)
+            //{
+            //    group.Messages.Add(mlgroup.MessageLog[l].GetMessageContents());
+            //}
+            group.UserName = currentUser.UserName;
+            group.MyGroups = currentUser.Groups;
+            group.Group = currentUser.Group;
+            List<MessageInfo> message = await Usercontrol.GetGroupChat(new NameModel() { Name = currentUser.Group });
+            group.Messages = message;
             return View(group);
         }
 
