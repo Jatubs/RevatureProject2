@@ -135,20 +135,7 @@ namespace MinionChat.Client.Controllers
 
         public async Task<ActionResult> Groups(Groups group)
         {
-            //group.Group = mlgroup.GetName();
-            //for (int j = 0; j < mluser.GetGroups().Count; j++)
-            //{
-            //    group.MyGroups.Add(mluser.Groups[j].GetName());
-            //}
-            //group.UserName = mlgroup.GetUsername();
-            //for (int k = 0; k < mlgroup.GetMembers().Count; k++)
-            //{
-            //    group.Minions.Add(mlgroup.Members[k].GetName());
-            //}
-            //for (int l = 0; l < mlgroup.GetMessageLog().Count; l++)
-            //{
-            //    group.Messages.Add(mlgroup.MessageLog[l].GetMessageContents());
-            //}
+            
             return View(Globalgroup);
         }
 
