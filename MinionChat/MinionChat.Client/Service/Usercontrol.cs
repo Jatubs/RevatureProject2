@@ -38,6 +38,7 @@ namespace MinionChat.Client.Service
             var content = JsonConvert.SerializeObject(user);
             var httpContent = new StringContent(content, Encoding.UTF8, "application/json");
             var responds = await client.PostAsync("http://minionchatserver.azurewebsites.net/api/Login", httpContent);
+            string test = responds.Headers.ElementAt(2).Value.ElementAt(0).ToString();
             var result = await responds.Content.ReadAsStringAsync();
             
            return JsonConvert.DeserializeObject<ListofFriendandGroup>(responds.Content.ReadAsStringAsync().GetAwaiter().GetResult());
