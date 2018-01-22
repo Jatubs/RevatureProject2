@@ -90,6 +90,7 @@ namespace MinionChat.DataServer.DatabaseConnections
                 {
                     if(user.Password == userinfo.Password)
                     {
+                        
                         return true;
                     }
                     else
