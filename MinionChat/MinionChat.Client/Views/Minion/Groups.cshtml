@@ -35,7 +35,9 @@
         {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item)
+                <strong> @Html.DisplayFor(modelItem => item.NameofSender) : <br /></strong>
+                @Html.DisplayFor(modelItem => item.Message)<br />
+                @Html.DisplayFor(modelItem => item.TimeofMessage)<br />
             </td>
         </tr>
 }

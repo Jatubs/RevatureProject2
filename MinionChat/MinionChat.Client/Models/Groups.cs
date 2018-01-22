@@ -14,6 +14,6 @@ namespace MinionChat.Client.Models
         public string NewGroup { get; set; }
         public List<string> MyGroups = new List<string>();
         public string Message { get; set; }
-        public List<string> Messages = new List<string>();
+        public List<MessageInfo> Messages = new List<MessageInfo>();
     }
 }
