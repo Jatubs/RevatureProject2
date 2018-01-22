@@ -35,7 +35,7 @@ namespace MinionChat.Client.Controllers
                 currentUser.Friends = lists.Friend;
                 currentUser.Groups = lists.Group;
                 currentUser.UserName = user.Username;
-
+                Globalgroup.MyGroups = lists.Group;
                 return RedirectToAction("UserHome", currentUser);
             }
             else
@@ -63,9 +63,24 @@ namespace MinionChat.Client.Controllers
                 {
                     return View();
                 }
-                currentUser.UserName = userinfo.Username;
-                currentUser.Name = userinfo.Name;
-                return RedirectToAction("UserHome");
+                //currentUser.UserName = userinfo.Username;
+                //currentUser.Name = userinfo.Name;
+                //currentUser.Friends = new List<string>();
+                ListofFriendandGroup lists = await Usercontrol.Login(userinfo);
+                if (lists.IsTheUserValid)
+                {
+                    currentUser.Friends = lists.Friend;
+                    currentUser.Groups = lists.Group;
+                    currentUser.UserName = userinfo.Username;
+                    Globalgroup.MyGroups = lists.Group;
+                    return RedirectToAction("UserHome", currentUser);
+                }
+                else
+                {
+                    return View();
+                }
+
+                //return RedirectToAction("UserHome");
             }
             catch (Exception ex)
             {
@@ -91,6 +106,7 @@ namespace MinionChat.Client.Controllers
         
         public async Task<ActionResult> AddFriend(Users user)
         {
+
             FriendModel newfriend = new FriendModel();
             newfriend.Username = currentUser.UserName;
             if (newfriend.Username == null)
@@ -100,6 +116,11 @@ namespace MinionChat.Client.Controllers
             newfriend.Friendname = user.Friend;
             List<UserInfo> temp2 = new List<UserInfo>();
 
+            if(user.Friend == null)
+            {
+                return RedirectToAction("UserHome");
+
+            }
             temp2 = await Usercontrol.Addfriend(newfriend);
             for (int i = 0; i < temp2.Count; i++)
             {
@@ -113,16 +134,29 @@ namespace MinionChat.Client.Controllers
             //mlgroup.SetName(user.Group);
             //mlgroup.SetUsername(mluser.Username);
             //mlgroup.Groups = mluser.Groups;
+            bool groupexists = false;
+            foreach (var group in Globalgroup.MyGroups)
+            {
+                if (group == user.Group)
+                {
+                    groupexists = true;
+                }
+            }
 
-            currentUser.Group = user.Group;
-            //       await Usercontrol.AddGroup()
-            Globalgroup.UserName = currentUser.UserName;
-            Globalgroup.MyGroups = currentUser.Groups;
-            Globalgroup.Group = currentUser.Group;
-            List<MessageInfo> message = await Usercontrol.GetGroupChat(new NameModel() { Name = currentUser.Group });
-            Globalgroup.Messages = message;
 
-            return RedirectToAction("Groups");
+            if (groupexists == true)
+            {
+                currentUser.Group = user.Group;
+                //       await Usercontrol.AddGroup()
+                Globalgroup.UserName = currentUser.UserName;
+                Globalgroup.MyGroups = currentUser.Groups;
+                Globalgroup.Group = currentUser.Group;
+                List<MessageInfo> message = await Usercontrol.GetGroupChat(new NameModel() { Name = currentUser.Group });
+                Globalgroup.Messages = message;
+
+                return RedirectToAction("Groups");
+            }
+            else return RedirectToAction("UserHome");
         }
 
         public ActionResult AddMinion()
@@ -134,18 +168,20 @@ namespace MinionChat.Client.Controllers
 
         public async Task<ActionResult> Groups(Groups group)
         {
-            
+            List<MessageInfo> message = await Usercontrol.GetGroupChat(new NameModel() { Name = currentUser.Group });
+            Globalgroup.Messages = message;
             return View(Globalgroup);
         }
 
-        public ActionResult ChangeGroups(Groups group)
-        {
-            mlgroup.SetName(group.NewGroup);
-            return RedirectToAction("AddMinion");
-        }
+        
 
         public async Task<ActionResult> AddGroup(Users user)
         {
+            if (user.Group == null)
+            {
+                return RedirectToAction("UserHome");
+
+            }
             NameModel testmod = new NameModel();
             testmod.Name = user.Group;
             List<string> groups = await Usercontrol.AddGroup(testmod);
@@ -191,6 +227,11 @@ namespace MinionChat.Client.Controllers
 
         public async Task<ActionResult> DeleteFriend(Users user)
         {
+            if (user.Friend == null)
+            {
+                return RedirectToAction("UserHome");
+
+            }
             //mluser.RemoveFriendStr(user.Friend);
             FriendModel newfriend = new FriendModel();
             newfriend.Username = currentUser.UserName;
@@ -210,6 +251,11 @@ namespace MinionChat.Client.Controllers
 
         public async Task<ActionResult> DeleteGroup(Users user)
         {
+            if (user.Group == null)
+            {
+                return RedirectToAction("UserHome");
+
+            }
             NameModel testmod = new NameModel();
             testmod.Name = user.Group;
             List<string> groups = await Usercontrol.RemoveGroup(testmod);
