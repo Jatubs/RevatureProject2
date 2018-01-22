@@ -122,9 +122,12 @@ namespace MinionChat.Client.Controllers
 
             }
             temp2 = await Usercontrol.Addfriend(newfriend);
+            currentUser.Friends.Clear();
             for (int i = 0; i < temp2.Count; i++)
             {
                 mluser.Friends.Add(new Library.User(temp2[i].Username));
+                currentUser.Friends.Add(temp2[i].Username);
+
             }
             return RedirectToAction("UserHome");
         }
@@ -241,9 +244,12 @@ namespace MinionChat.Client.Controllers
             newfriend.Friendname = user.Friend;
             List<string> temp2 = new List<string>();
             temp2 = await Usercontrol.RemoveFriend(newfriend);
+            currentUser.Friends.Clear();
+
             for (int i = 0; i < temp2.Count; i++)
             {
                 mluser.Friends.Add(new Library.User(temp2[i]));
+                currentUser.Friends.Add(temp2[i]);
             }
             return RedirectToAction("UserHome");
         }
