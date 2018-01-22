@@ -73,10 +73,8 @@ namespace MinionChat.Client.Service
             var httpContent = new StringContent(content, Encoding.UTF8, "application/json");
             var responds = await client.PostAsync("http://minionchatserver.azurewebsites.net/api/addGroup", httpContent);
             var result = await responds.Content.ReadAsStringAsync();
-            List<string> returnval = new List<string>();
-            returnval = JsonConvert.DeserializeObject<List<string>>(result);
 
-            return returnval;
+            return JsonConvert.DeserializeObject<List<string>>(responds.Content.ReadAsStringAsync().GetAwaiter().GetResult());
         }
         public static async Task<List<string>> RemoveGroup(NameModel param)
         {
@@ -85,9 +83,8 @@ namespace MinionChat.Client.Service
             var httpContent = new StringContent(content, Encoding.UTF8, "application/json");
             var responds = await client.PostAsync("http://minionchatserver.azurewebsites.net/api/RemoveGroup", httpContent);
             var result = await responds.Content.ReadAsStringAsync();
-            List<string> returnval = new List<string>();
-            returnval = JsonConvert.DeserializeObject<List<string>>(result);
-            return returnval;
+
+            return JsonConvert.DeserializeObject<List<string>>(responds.Content.ReadAsStringAsync().GetAwaiter().GetResult());
         }
         public static async Task<List<MessageInfo>> GetGroupChat(NameModel param)
         {

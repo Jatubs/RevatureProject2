@@ -118,12 +118,12 @@ namespace MinionChat.Client.Controllers
             return RedirectToAction("Groups");
         }
 
-        //public ActionResult AddMinion()
-        //{
-        //    mlgroup.MessageLog.RemoveRange(0, mlgroup.GetMessageLog().Count);
-        //    mlgroup.AddMemberStr(mlgroup.GetUsername());
-        //    return RedirectToAction("Groups");
-        //}
+        public ActionResult AddMinion()
+        {
+            mlgroup.MessageLog.RemoveRange(0, mlgroup.GetMessageLog().Count);
+            mlgroup.AddMemberStr(mlgroup.GetUsername());
+            return RedirectToAction("Groups");
+        }
 
         public async Task<ActionResult> Groups(Groups group)
         {
@@ -155,9 +155,14 @@ namespace MinionChat.Client.Controllers
             return RedirectToAction("AddMinion");
         }
 
-        public ActionResult AddGroup(Users user)
+        public async Task<ActionResult> AddGroup(Users user)
         {
-            mluser.AddGroupStr(user.Group);
+            NameModel testmod = new NameModel();
+            testmod.Name = user.Group;
+            List<string> groups = await Usercontrol.AddGroup(testmod);
+            currentUser.Groups = groups;
+
+
             return RedirectToAction("UserHome");
         }
 
@@ -214,9 +219,12 @@ namespace MinionChat.Client.Controllers
             return RedirectToAction("UserHome");
         }
 
-        public ActionResult DeleteGroup(Users user)
+        public async Task<ActionResult> DeleteGroup(Users user)
         {
-            mluser.RemoveGroupStr(user.Group);
+            NameModel testmod = new NameModel();
+            testmod.Name = user.Group;
+            List<string> groups = await Usercontrol.RemoveGroup(testmod);
+            currentUser.Groups = groups;
             return RedirectToAction("UserHome");
         }
     }
