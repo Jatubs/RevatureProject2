@@ -29,8 +29,9 @@ namespace MinionChat.Client.Controllers
         [HttpPost]
         public async Task<ActionResult> Login(UserInfo user)
         {
-            
             ListofFriendandGroup lists = await Usercontrol.Login(user);
+            HttpCookieCollection cookiebag = new HttpCookieCollection();
+            cookiebag = HttpContext.Response.Cookies;
             if (lists.IsTheUserValid)
             {
                 currentUser.Friends = lists.Friend;
