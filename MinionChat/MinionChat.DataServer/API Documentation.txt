@@ -75,7 +75,7 @@ input MessageInfo
 	string NameofSender { get; set; }
         string Message { get; set; }
         DateTime TimeofMessage { get; set; }      <- dont need to fill out can leave it empty when you send
-        string NameofGroup { get; set; }          <------- need to make it Username+FriendName for friend chat
+        string NameofGroup { get; set; }          <------- just put the friend's name here(trust us that works)
 	
 output 
 	bool
