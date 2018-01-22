@@ -37,6 +37,36 @@ namespace MinionChat.DataServer.DatabaseConnections
             return true;
         }
 
+        public async Task<List<MessageInfo>> FriendChat(string NameofGroup)
+        {
+            List<MessageInfo> message = new List<MessageInfo>();
+            int idofgroup = -1;
+            foreach (var group in db.ChatGroups)
+            {
+                if (group.Name == NameofGroup)
+                {
+                    idofgroup = group.ChatGroupId;
+                    break;
+                }
+            }
+
+            foreach (var chatlog in db.ChatLog)
+            {
+                if (chatlog.ChatGroupId == idofgroup)
+                {
+                    message.Add(new MessageInfo()
+                    {
+                        NameofSender = findUser(chatlog.UserIdofSender),
+                        Message = chatlog.Message,
+                        TimeofMessage = chatlog.TimeofMessage,
+                        NameofGroup = NameofGroup
+                    });
+                }
+            }
+
+            return message;
+            
+        }
         public async Task<bool> Login(UserInfo userinfo)
         {
             foreach (var user in db.Users)
@@ -249,6 +279,7 @@ namespace MinionChat.DataServer.DatabaseConnections
                 {
                     alreadyexsits = true;
                 }
+                if(group.FriendChat == false)
                 ListofGroup.Add(group.Name);
             }
             if (alreadyexsits == false)
@@ -349,12 +380,12 @@ namespace MinionChat.DataServer.DatabaseConnections
                     break;
                 }
             }
-            if( idofgroup == -1)
+            if (idofgroup == -1)
             {
                 return false;
             }
             int IDofSender = findUsersID(NameofSender);
-            if(IDofSender == -1)
+            if (IDofSender == -1)
             {
                 return false;
             }
@@ -363,9 +394,46 @@ namespace MinionChat.DataServer.DatabaseConnections
                 ChatGroupId = idofgroup,
                 Message = message,
                 UserIdofSender = IDofSender,
-                TimeofMessage = DateTime.UtcNow        
+                TimeofMessage = DateTime.UtcNow
             };
-            
+
+            await db.ChatLog.AddAsync(newchatmessage);
+            await db.SaveChangesAsync();
+            return true;
+        }
+
+
+
+
+
+        public async Task<bool> addChatToFriend(string NameofSender, string NameofFriend, string message)
+        {
+            int idofgroup = -1;
+            foreach (var group in db.ChatGroups)
+            {
+                if (group.Name == NameofSender + NameofFriend || group.Name == NameofFriend + NameofSender)
+                {
+                    idofgroup = group.ChatGroupId;
+                    break;
+                }
+            }
+            if (idofgroup == -1)
+            {
+                return false;
+            }
+            int IDofSender = findUsersID(NameofSender);
+            if (IDofSender == -1)
+            {
+                return false;
+            }
+            ChatLog newchatmessage = new ChatLog()
+            {
+                ChatGroupId = idofgroup,
+                Message = message,
+                UserIdofSender = IDofSender,
+                TimeofMessage = DateTime.UtcNow
+            };
+
             await db.ChatLog.AddAsync(newchatmessage);
             await db.SaveChangesAsync();
             return true;
