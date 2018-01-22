@@ -23,9 +23,9 @@ namespace MinionChat.DataServer.Controllers
         public async Task<bool> AddUser(UserInfo user)
         {
             var x = new Usercontrol();
-            HttpCookie cookie = new HttpCookie("Auth-Cookie", user.Username.ToString());
+            HttpCookie cookie = new HttpCookie("Auth-Cookie " + user.Username.ToString(), user.Username.ToString());
             cookie.Expires = DateTime.Now.AddHours(1);
-            HttpContext.Current.Request.Cookies.Add(cookie);
+            HttpContext.Current.Response.AppendCookie(cookie);
 
             return await x.AddUser(user);
         }

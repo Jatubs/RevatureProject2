@@ -26,10 +26,10 @@ namespace MinionChat.DataServer.Controllers
 
             List<string> ListofGroup = new List<string>();
             List<string> listoffriend = new List<string>();
-            HttpCookie cookie = new HttpCookie("Auth-Cookie", user.Username.ToString());
+            HttpCookie cookie = new HttpCookie("Auth-Cookie " + user.Username.ToString(), user.Username.ToString());
             cookie.Expires = DateTime.Now.AddHours(1);
 
-            HttpContext.Current.Request.Cookies.Add(cookie);
+            HttpContext.Current.Response.AppendCookie(cookie);
             bool login = await x.Login(user);
             if (login)
             {

@@ -31,9 +31,12 @@ namespace MinionChat.Client.Controllers
         {
             HttpCookieCollection cookiebag = new HttpCookieCollection();
             cookiebag = HttpContext.Request.Cookies;
+            cookiebag = HttpContext.Response.Cookies;
 
             ListofFriendandGroup lists = await Usercontrol.Login(user);
             cookiebag = HttpContext.Request.Cookies;
+            cookiebag = HttpContext.Response.Cookies;
+
 
             if (lists.IsTheUserValid)
             {
