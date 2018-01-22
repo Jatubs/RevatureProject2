@@ -98,13 +98,12 @@ namespace MinionChat.Client.Controllers
                 newfriend.Username = "we";
             }
             newfriend.Friendname = user.Friend;
-            List<string> temp = new List<string>();
             List<UserInfo> temp2 = new List<UserInfo>();
 
             temp2 = await Usercontrol.Addfriend(newfriend);
-            for (int i = 0; i < temp.Count; i++)
+            for (int i = 0; i < temp2.Count; i++)
             {
-                mluser.Friends.Add(new Library.User(currentUser.Friends[i]));
+                mluser.Friends.Add(new Library.User(temp2[i].Username));
             }
             return RedirectToAction("UserHome");
         }
@@ -126,12 +125,12 @@ namespace MinionChat.Client.Controllers
             return RedirectToAction("Groups");
         }
 
-        //public ActionResult AddMinion()
-        //{
-        //    mlgroup.MessageLog.RemoveRange(0, mlgroup.GetMessageLog().Count);
-        //    mlgroup.AddMemberStr(mlgroup.GetUsername());
-        //    return RedirectToAction("Groups");
-        //}
+        public ActionResult AddMinion()
+        {
+            mlgroup.MessageLog.RemoveRange(0, mlgroup.GetMessageLog().Count);
+            mlgroup.AddMemberStr(mlgroup.GetUsername());
+            return RedirectToAction("Groups");
+        }
 
         public async Task<ActionResult> Groups(Groups group)
         {
@@ -145,9 +144,14 @@ namespace MinionChat.Client.Controllers
             return RedirectToAction("AddMinion");
         }
 
-        public ActionResult AddGroup(Users user)
+        public async Task<ActionResult> AddGroup(Users user)
         {
-            mluser.AddGroupStr(user.Group);
+            NameModel testmod = new NameModel();
+            testmod.Name = user.Group;
+            List<string> groups = await Usercontrol.AddGroup(testmod);
+            currentUser.Groups = groups;
+
+
             return RedirectToAction("UserHome");
         }
 
@@ -185,15 +189,31 @@ namespace MinionChat.Client.Controllers
             return RedirectToAction("Groups");
         }
 
-        public ActionResult DeleteFriend(Users user)
+        public async Task<ActionResult> DeleteFriend(Users user)
         {
-            mluser.RemoveFriendStr(user.Friend);
+            //mluser.RemoveFriendStr(user.Friend);
+            FriendModel newfriend = new FriendModel();
+            newfriend.Username = currentUser.UserName;
+            if (newfriend.Username == null)
+            {
+                newfriend.Username = "we";
+            }
+            newfriend.Friendname = user.Friend;
+            List<string> temp2 = new List<string>();
+            temp2 = await Usercontrol.RemoveFriend(newfriend);
+            for (int i = 0; i < temp2.Count; i++)
+            {
+                mluser.Friends.Add(new Library.User(temp2[i]));
+            }
             return RedirectToAction("UserHome");
         }
 
-        public ActionResult DeleteGroup(Users user)
+        public async Task<ActionResult> DeleteGroup(Users user)
         {
-            mluser.RemoveGroupStr(user.Group);
+            NameModel testmod = new NameModel();
+            testmod.Name = user.Group;
+            List<string> groups = await Usercontrol.RemoveGroup(testmod);
+            currentUser.Groups = groups;
             return RedirectToAction("UserHome");
         }
     }
