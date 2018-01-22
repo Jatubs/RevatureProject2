@@ -207,8 +207,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\FriendModel.cs" />
     <Compile Include="Models\Groups.cs" />
+    <Compile Include="Models\MessageInfo.cs" />
     <Compile Include="Models\Messages.cs" />
+    <Compile Include="Models\NameModel.cs" />
     <Compile Include="Models\UserInfo.cs" />
     <Compile Include="Models\Users.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -273,10 +276,17 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MinionChat.DataServer\MinionChat.DataServer.csproj">
+      <Project>{0D8F63BA-DB32-49E9-82AB-EDF4743A70DD}</Project>
+      <Name>MinionChat.DataServer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MinionChat.Library\MinionChat.Library.csproj">
       <Project>{8df63f5e-5eeb-4c1a-a741-dcf099a1c4a9}</Project>
       <Name>MinionChat.Library</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

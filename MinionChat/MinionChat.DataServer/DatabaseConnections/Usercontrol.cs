@@ -256,7 +256,7 @@ namespace MinionChat.DataServer.DatabaseConnections
             return ListofGroup;
         }
 
-        public async Task<List<MessageInfo>> GroupChat(string NameofGroup) //still needs to test after add chat
+        public async Task<List<MessageInfo>> GroupChat(string NameofGroup) 
         {
             List<MessageInfo> message = new List<MessageInfo>();
             int idofgroup = -1;

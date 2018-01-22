@@ -17,6 +17,7 @@ namespace MinionChat.Client.Controllers
         public ActionResult Index()
         {
             return View();
+
         }
 
         public ActionResult Login()
@@ -46,8 +47,17 @@ namespace MinionChat.Client.Controllers
             try
             {
                 // TODO: Add insert logic here
-
-               bool x = await Usercontrol.AddUsers(userinfo);
+                FriendModel addfr = new Models.FriendModel();
+                addfr.Username = "test1";
+                addfr.Friendname = "test2";
+                NameModel addgr = new NameModel();
+                addgr.Name = "grouptest1";
+                MessageInfo message = new MessageInfo();
+                message.NameofSender = "test1";
+                message.Message= "Get Booplesnooted, My dude";
+                message.NameofGroup = "grouptest1";
+                await Usercontrol.AddChatToGroup(message);
+                bool x = await Usercontrol.AddUsers(userinfo);
                 if (x == false)
                 {
                     throw new Exception();
