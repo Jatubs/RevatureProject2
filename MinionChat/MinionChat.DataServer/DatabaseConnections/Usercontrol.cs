@@ -36,6 +36,26 @@ namespace MinionChat.DataServer.DatabaseConnections
 
             return true;
         }
+
+        public async Task<bool> Login(UserInfo userinfo)
+        {
+            foreach (var user in db.Users)
+            {
+                if(user.Username == userinfo.Username)
+                {
+                    if(user.Password == userinfo.Password)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+            return false;
+        }
+
         public async Task<List<UserInfo>> RemoveFriend(string Username, string FriendUsername)
         {
             bool alreadyhasthatfriend = false;
@@ -115,6 +135,7 @@ namespace MinionChat.DataServer.DatabaseConnections
            
             return FriendList;
         }
+
         public async Task<List<UserInfo>> AddFriend(string Username, string FriendUsername)
         {
             bool alreadyhasthatfriend = false;
@@ -185,6 +206,37 @@ namespace MinionChat.DataServer.DatabaseConnections
                 }
             }
             return FriendList;
+        }
+
+        public async Task<List<UserInfo>> getFriend(string Username)
+        {
+            List<UserInfo> friendlist = new List<UserInfo>();
+            int userid = findUsersID(Username);
+            foreach (var friend in  db.FriendList)
+            {
+                if(friend.UserId == userid)
+                {
+                    friendlist.Add(new UserInfo() { Username = findUser(friend.FriendId) });
+                }
+            }
+
+            return friendlist;
+        }
+
+        public async Task<List<string>> getGroup()
+        {
+            List<string> groups = new List<string>();
+            
+
+            foreach (var group in db.ChatGroups)
+            {
+                
+                    if (group.FriendChat == false)
+                        groups.Add(group.Name);
+                
+            }
+
+            return groups;
         }
 
         public async Task<List<string>> AddGroup(string NameofGroup)

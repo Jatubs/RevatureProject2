@@ -2,24 +2,36 @@
 @{
     ViewBag.Title = "Login";
 }
+@model MinionChat.Client.Models.UserInfo
 
-@model Minion.Client.Models.Users
 
 <div class="jumbotron">
     <h1>One Of Us, One Of Us!</h1>
     <p class="lead">Just give us some basic info so we can personalize your experience.</p>
 </div>
 
-<form action="/Minion/AddLogin">
+@using (Html.BeginForm())
+{
 
-    <p>
-        @Html.LabelFor(m => m.UserName)
-        @Html.TextBoxFor(m => m.UserName)
-    </p>
-    <p>
-        @Html.LabelFor(m => m.Password)
-        @Html.TextBoxFor(m => m.Password)
-    </p>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Username, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+            @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+        </div>
+    </div>
 
-    <button class="btn btn-default" type="submit">Log In</button>
-</form>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Login" class="btn btn-default" />
+        </div>
+    </div>
+}

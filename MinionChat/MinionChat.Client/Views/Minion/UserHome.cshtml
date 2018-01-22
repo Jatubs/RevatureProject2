@@ -1,8 +1,7 @@
 ﻿@{
     ViewBag.Title = "UserHome";
 }
-
-@model Minion.Client.Models.Users
+@model MinionChat.Client.Models.Users
 
 
 <h1>@Html.DisplayTextFor(model => model.UserName)</h1>
@@ -20,7 +19,7 @@
                         @Html.DisplayFor(modelItem => item)
                     </td>
                 </tr>
-            }
+                }
                 </tr>
             </table>
             <form action="/Minion/MessageFriend">
@@ -44,13 +43,13 @@
             <table>
                 <tr>
                     @foreach (var item in Model.Groups)
-            {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item)
-                </td>
-            </tr>
-}
+                    {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item)
+                        </td>
+                    </tr>
+                }
                     </tr>
                 </table>
                 <form action="/Minion/GotoGroup">

@@ -31,6 +31,19 @@ namespace MinionChat.DataServer.Controllers
             return listoffriend;
           //  return await x.AddUser(user);
         }
+        [HttpGet]
+        public async Task<List<string>> getFriend(UsernameandFriendname friendtoadd)
+        {
+            var uc = new Usercontrol();
+            List<string> listoffriend = new List<string>();
+            List<UserInfo> ListofUserInfo = await uc.getFriend(friendtoadd.Username);
+            foreach (var userinfo in ListofUserInfo)
+            {
+                listoffriend.Add(userinfo.Username);
+            }
+            return listoffriend;
+            //  return await x.AddUser(user);
+        }
 
     }
 }
