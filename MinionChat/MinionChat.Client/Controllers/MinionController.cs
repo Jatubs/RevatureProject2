@@ -164,7 +164,6 @@ namespace MinionChat.Client.Controllers
             List<string> groups = await Usercontrol.AddGroup(testmod);
             currentUser.Groups = groups;
 
-
             return RedirectToAction("UserHome");
         }
 
