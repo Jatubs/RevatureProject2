@@ -97,12 +97,11 @@ namespace MinionChat.Client.Controllers
                 newfriend.Username = "we";
             }
             newfriend.Friendname = user.Friend;
-            List<string> temp = new List<string>();
             List<UserInfo> temp2 = new List<UserInfo>();
             temp2 = await Usercontrol.Addfriend(newfriend);
-            for (int i = 0; i < temp.Count; i++)
+            for (int i = 0; i < temp2.Count; i++)
             {
-                mluser.Friends.Add(new Library.User(currentUser.Friends[i]));
+                mluser.Friends.Add(new Library.User(temp2[i].Username));
             }
             return RedirectToAction("UserHome");
         }
@@ -174,9 +173,22 @@ namespace MinionChat.Client.Controllers
             return RedirectToAction("Groups");
         }
 
-        public ActionResult DeleteFriend(Users user)
+        public async Task<ActionResult> DeleteFriend(Users user)
         {
-            mluser.RemoveFriendStr(user.Friend);
+            //mluser.RemoveFriendStr(user.Friend);
+            FriendModel newfriend = new FriendModel();
+            newfriend.Username = currentUser.UserName;
+            if (newfriend.Username == null)
+            {
+                newfriend.Username = "we";
+            }
+            newfriend.Friendname = user.Friend;
+            List<string> temp2 = new List<string>();
+            temp2 = await Usercontrol.RemoveFriend(newfriend);
+            for (int i = 0; i < temp2.Count; i++)
+            {
+                mluser.Friends.Add(new Library.User(temp2[i]));
+            }
             return RedirectToAction("UserHome");
         }
 

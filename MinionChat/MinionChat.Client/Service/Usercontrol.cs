@@ -43,7 +43,7 @@ namespace MinionChat.Client.Service
            return JsonConvert.DeserializeObject<ListofFriendandGroup>(responds.Content.ReadAsStringAsync().GetAwaiter().GetResult());
         }
 
-        public static async Task<List<string>> Addfriend(FriendModel param)
+        public static async Task<List<UserInfo>> Addfriend(FriendModel param)
         {
             var client = new HttpClient();
             var content = JsonConvert.SerializeObject(param);
@@ -52,7 +52,7 @@ namespace MinionChat.Client.Service
             var result = await responds.Content.ReadAsStringAsync();
             List<string> returnval = new List<string>();
 
-            return JsonConvert.DeserializeObject<List<string>>(responds.Content.ReadAsStringAsync().GetAwaiter().GetResult());
+            return JsonConvert.DeserializeObject<List<UserInfo>>(responds.Content.ReadAsStringAsync().GetAwaiter().GetResult());
 
             
         }
@@ -63,10 +63,8 @@ namespace MinionChat.Client.Service
             var httpContent = new StringContent(content, Encoding.UTF8, "application/json");
             var responds = await client.PostAsync("http://minionchatserver.azurewebsites.net/api/RemoveFriend", httpContent);
             var result = await responds.Content.ReadAsStringAsync();
-            List<string> returnval = new List<string>();
-            returnval = JsonConvert.DeserializeObject<List<string>>(result);
 
-            return returnval;
+            return JsonConvert.DeserializeObject<List<string>>(responds.Content.ReadAsStringAsync().GetAwaiter().GetResult());
         }
         public static async Task<List<string>> AddGroup(NameModel param)
         {
