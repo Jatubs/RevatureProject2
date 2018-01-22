@@ -5,11 +5,10 @@ using System.Web;
 
 namespace MinionChat.DataServer.Models
 {
-    public class UsernameandFriendname
+    public class ListofFriendandGroup
     {
-        public string Username { get; set; }
-        public string Friendname { get; set; }
+        public List<string> Friend { get; set; }
+        public List<string> Group { get; set; }
         public bool IsTheUserValid { get; set; }
-
     }
 }

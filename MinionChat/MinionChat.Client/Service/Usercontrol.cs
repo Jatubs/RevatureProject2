@@ -17,8 +17,9 @@ namespace MinionChat.Client.Service
             var client = new HttpClient();
             var content = JsonConvert.SerializeObject(user);
             var httpContent = new StringContent(content, Encoding.UTF8, "application/json");
-            var responds = await client.PostAsync("http://localhost/service/api/AddUser", httpContent);
+            var responds = await client.PostAsync("http://minionchatrestapi.azurewebsites.net/api/AddUser", httpContent);
             var result = await responds.Content.ReadAsStringAsync();
+            
             if (result == "false")
             {
                 return false;
@@ -28,6 +29,19 @@ namespace MinionChat.Client.Service
                 return true;
             }
             
+            
+        }
+
+        public static async Task<ListofFriendandGroup> Login(UserInfo user)
+        {
+            var client = new HttpClient();
+            var content = JsonConvert.SerializeObject(user);
+            var httpContent = new StringContent(content, Encoding.UTF8, "application/json");
+            var responds = await client.PostAsync("http://minionchatrestapi.azurewebsites.net/api/Login", httpContent);
+            var result = await responds.Content.ReadAsStringAsync();
+
+         
+           return JsonConvert.DeserializeObject<ListofFriendandGroup>(responds.Content.ReadAsStringAsync().GetAwaiter().GetResult());
         }
 
 

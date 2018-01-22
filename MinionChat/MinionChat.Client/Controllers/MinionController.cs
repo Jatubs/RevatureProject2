@@ -1,5 +1,4 @@
-﻿using Minion.Client.Models;
-using MinionChat.Client.Models;
+﻿using MinionChat.Client.Models;
 using MinionChat.Client.Service;
 using System;
 using System.Collections.Generic;
@@ -14,35 +13,46 @@ namespace MinionChat.Client.Controllers
     {
         static MinionChat.Library.User mluser = new MinionChat.Library.User();
         static MinionChat.Library.Group mlgroup = new MinionChat.Library.Group();
+        static Users currentUser = new Users();
         public ActionResult Index()
         {
             return View();
         }
 
+        [HttpGet]
         public ActionResult Login()
         {
             return View();
         }
+        [HttpPost]
+        public async Task<ActionResult> Login(UserInfo user)
+        {
+            ListofFriendandGroup lists = await Usercontrol.Login(user);
+            if (lists.IsTheUserValid)
+            {
+                currentUser.Friends = lists.Friend;
+                currentUser.Groups = lists.Group;
+                currentUser.UserName = user.Username;
+
+                return RedirectToAction("UserHome", currentUser);
+            }
+            else
+            {
+                return View();
+            }
+        }
         [HttpGet]
         public async Task<ActionResult> CreateAccount()
         {
+            //good
             return View();
         } 
-
-        public ActionResult AddLogin(Users user)
-        {
-            mluser.SetUsername(user.UserName);
-            mluser.SetPassword(user.Password);
-            return RedirectToAction("UserHome");
-        }
         
-       
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> CreateAccount(UserInfo userinfo)
         {
-            
+            //good
             try
             {
                 // TODO: Add insert logic here
@@ -70,19 +80,10 @@ namespace MinionChat.Client.Controllers
             return RedirectToAction("UserHome");
         }
 
-        public ActionResult UserHome(Users user)
+        public ActionResult UserHome(Users userswithlist)
         {
-            user.UserName = mluser.GetUsername();
             
-            for (int i = 0; i < mluser.GetFriends().Count; i++)
-            {
-                user.Friends.Add(mluser.Friends[i].GetUsername());
-            }
-            for (int j = 0; j < mluser.GetGroups().Count; j++)
-            {
-                user.Groups.Add(mluser.Groups[j].GetName());
-            }
-            return View(user);
+            return View(currentUser);
         }
         
         public ActionResult AddFriend(Users user)

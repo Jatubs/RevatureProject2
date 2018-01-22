@@ -26,5 +26,16 @@ namespace MinionChat.DataServer.Controllers
             return ListofGroup;
         }
 
+        [HttpGet]
+        public async Task<List<string>> getGroup()
+        {
+            var x = new Usercontrol();
+            List<string> ListofGroup = await x.getGroup();
+            return ListofGroup;
+        }
+
     }
+
+
+
 }
