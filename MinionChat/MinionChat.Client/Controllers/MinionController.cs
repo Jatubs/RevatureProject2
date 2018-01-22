@@ -14,6 +14,7 @@ namespace MinionChat.Client.Controllers
         static MinionChat.Library.User mluser = new MinionChat.Library.User();
         static MinionChat.Library.Group mlgroup = new MinionChat.Library.Group();
         static Users currentUser = new Users();
+        static Groups Globalgroup = new Groups();
         public ActionResult Index()
         {
             return View();
@@ -108,14 +109,20 @@ namespace MinionChat.Client.Controllers
             return RedirectToAction("UserHome");
         }
 
-        public ActionResult GotoGroup(Users user) // join group
+        public async Task<ActionResult> GotoGroup(Users user) // join group
         {
             //mlgroup.SetName(user.Group);
             //mlgroup.SetUsername(mluser.Username);
             //mlgroup.Groups = mluser.Groups;
 
             currentUser.Group = user.Group;
-     //       await Usercontrol.AddGroup()
+            //       await Usercontrol.AddGroup()
+            Globalgroup.UserName = currentUser.UserName;
+            Globalgroup.MyGroups = currentUser.Groups;
+            Globalgroup.Group = currentUser.Group;
+            List<MessageInfo> message = await Usercontrol.GetGroupChat(new NameModel() { Name = currentUser.Group });
+            Globalgroup.Messages = message;
+
             return RedirectToAction("Groups");
         }
 
@@ -142,12 +149,7 @@ namespace MinionChat.Client.Controllers
             //{
             //    group.Messages.Add(mlgroup.MessageLog[l].GetMessageContents());
             //}
-            group.UserName = currentUser.UserName;
-            group.MyGroups = currentUser.Groups;
-            group.Group = currentUser.Group;
-            List<MessageInfo> message = await Usercontrol.GetGroupChat(new NameModel() { Name = currentUser.Group });
-            group.Messages = message;
-            return View(group);
+            return View(Globalgroup);
         }
 
         public ActionResult ChangeGroups(Groups group)
@@ -179,7 +181,7 @@ namespace MinionChat.Client.Controllers
         public async Task<ActionResult> AddMessage(Groups group)
         {
             //mlgroup.AddMessageStr(group.Message);
-            group.Messages.Add(new MessageInfo()
+            Globalgroup.Messages.Add(new MessageInfo()
             {
                 Message = group.Message,
                 NameofSender = currentUser.UserName,
