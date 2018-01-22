@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 
 
@@ -25,6 +26,10 @@ namespace MinionChat.DataServer.Controllers
 
             List<string> ListofGroup = new List<string>();
             List<string> listoffriend = new List<string>();
+            HttpCookie cookie = new HttpCookie("Auth-Cookie", user.Username.ToString());
+            cookie.Expires = DateTime.Now.AddHours(1);
+            
+            HttpContext.Current.Response.AppendCookie(cookie);
             bool login = await x.Login(user);
             if (login)
             {

@@ -29,6 +29,7 @@ namespace MinionChat.Client.Controllers
         [HttpPost]
         public async Task<ActionResult> Login(UserInfo user)
         {
+            
             ListofFriendandGroup lists = await Usercontrol.Login(user);
             if (lists.IsTheUserValid)
             {

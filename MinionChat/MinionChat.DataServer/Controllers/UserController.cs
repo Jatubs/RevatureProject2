@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 
 
@@ -22,6 +23,9 @@ namespace MinionChat.DataServer.Controllers
         public async Task<bool> AddUser(UserInfo user)
         {
             var x = new Usercontrol();
+            HttpCookie cookie = new HttpCookie("Auth-Cookie", user.Username.ToString());
+            cookie.Expires = DateTime.Now.AddHours(1);
+            HttpContext.Current.Response.AppendCookie(cookie);
             return await x.AddUser(user);
         }
 
