@@ -37,6 +37,7 @@ namespace MinionChat.Client.Controllers
 
             if (lists.IsTheUserValid && lists.cookieval == user.Username)
             {
+                currentUser.Authenticated = true;
                 currentUser.Friends = lists.Friend;
                 currentUser.Groups = lists.Group;
                 currentUser.UserName = user.Username;
@@ -98,6 +99,10 @@ namespace MinionChat.Client.Controllers
    
         public ActionResult UserHome(Users userswithlist)
         {
+            if (currentUser.Authenticated == false)
+            {
+                return RedirectToAction("Login");
+            }
         
             return View(currentUser);
         }
@@ -162,6 +167,11 @@ namespace MinionChat.Client.Controllers
     
         public async Task<ActionResult> Groups(Groups group)
         {
+            if (currentUser.Authenticated == false)
+            {
+                return RedirectToAction("Login");
+            }
+
             List<MessageInfo> message = await Usercontrol.GetGroupChat(new NameModel() { Name = currentUser.Group });
             Globalgroup.Messages = message;
             return View(Globalgroup);
@@ -187,6 +197,10 @@ namespace MinionChat.Client.Controllers
         //______
         public async Task<ActionResult> MessageFriend(Users user, Groups group)
         {
+            if (currentUser.Authenticated == false)
+            {
+                return RedirectToAction("Login");
+            }
 
             currentUser.Group = user.Group;
             currentUser.Friend = user.Friend;
@@ -204,6 +218,11 @@ namespace MinionChat.Client.Controllers
 
         public async Task<ActionResult> GroupsFriend(Groups group)
         {
+            if (currentUser.Authenticated == false)
+            {
+                return RedirectToAction("Login");
+            }
+
             List<MessageInfo> message = await Usercontrol.GetFriendChat(new FriendModel() { Friendname = currentUser.Friend, Username = currentUser.UserName });
             Globalgroup.Messages = message;
             return View(Globalgroup);

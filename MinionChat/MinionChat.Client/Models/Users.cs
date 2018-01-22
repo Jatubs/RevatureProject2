@@ -17,6 +17,8 @@ namespace MinionChat.Client.Models
         public List<string> Friends = new List<string>();
         public List<string> Groups = new List<string>();
         public string Minion { get; set; }
+        public bool Authenticated { get; set; } = false;
+
         public List<string> Minions = new List<string>() { "Me", "You", "We", "Us" };
     }
 }
