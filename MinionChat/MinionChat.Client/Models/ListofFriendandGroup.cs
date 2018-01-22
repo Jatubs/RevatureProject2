@@ -10,5 +10,6 @@ namespace MinionChat.Client.Models
         public List<string> Friend { get; set; }
         public List<string> Group { get; set; }
         public bool IsTheUserValid { get; set; }
+        public string cookieval { get; set; }
     }
 }
