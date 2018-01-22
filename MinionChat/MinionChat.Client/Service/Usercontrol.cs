@@ -16,7 +16,7 @@ namespace MinionChat.Client.Service
             var client = new HttpClient();
             var content = JsonConvert.SerializeObject(user);
             var httpContent = new StringContent(content, Encoding.UTF8, "application/json");
-            var responds = await client.PostAsync("http://minionchatrestapi.azurewebsites.net/api/AddUser", httpContent);
+            var responds = await client.PostAsync("http://minionchatserver.azurewebsites.net/api/AddUser", httpContent);
             var result = await responds.Content.ReadAsStringAsync();
             
             if (result == "false")
@@ -36,7 +36,7 @@ namespace MinionChat.Client.Service
             var client = new HttpClient();
             var content = JsonConvert.SerializeObject(user);
             var httpContent = new StringContent(content, Encoding.UTF8, "application/json");
-            var responds = await client.PostAsync("http://minionchatrestapi.azurewebsites.net/api/Login", httpContent);
+            var responds = await client.PostAsync("http://minionchatserver.azurewebsites.net/api/Login", httpContent);
             var result = await responds.Content.ReadAsStringAsync();
 
          
@@ -48,7 +48,7 @@ namespace MinionChat.Client.Service
             var client = new HttpClient();
             var content = JsonConvert.SerializeObject(param);
             var httpContent = new StringContent(content, Encoding.UTF8, "application/json");
-            var responds = await client.PostAsync("http://minionchatrestapi.azurewebsites.net/api/AddFriend", httpContent);
+            var responds = await client.PostAsync("http://minionchatserver.azurewebsites.net/api/AddFriend", httpContent);
             var result = await responds.Content.ReadAsStringAsync();
             List<string> returnval = new List<string>();
 
@@ -61,7 +61,7 @@ namespace MinionChat.Client.Service
             var client = new HttpClient();
             var content = JsonConvert.SerializeObject(param);
             var httpContent = new StringContent(content, Encoding.UTF8, "application/json");
-            var responds = await client.PostAsync("http://minionchatrestapi.azurewebsites.net/api/RemoveFriend", httpContent);
+            var responds = await client.PostAsync("http://minionchatserver.azurewebsites.net/api/RemoveFriend", httpContent);
             var result = await responds.Content.ReadAsStringAsync();
             List<string> returnval = new List<string>();
             returnval = JsonConvert.DeserializeObject<List<string>>(result);
@@ -73,7 +73,7 @@ namespace MinionChat.Client.Service
             var client = new HttpClient();
             var content = JsonConvert.SerializeObject(param);
             var httpContent = new StringContent(content, Encoding.UTF8, "application/json");
-            var responds = await client.PostAsync("http://minionchatrestapi.azurewebsites.net/api/addGroup", httpContent);
+            var responds = await client.PostAsync("http://minionchatserver.azurewebsites.net/api/addGroup", httpContent);
             var result = await responds.Content.ReadAsStringAsync();
             List<string> returnval = new List<string>();
             returnval = JsonConvert.DeserializeObject<List<string>>(result);
@@ -85,7 +85,7 @@ namespace MinionChat.Client.Service
             var client = new HttpClient();
             var content = JsonConvert.SerializeObject(param);
             var httpContent = new StringContent(content, Encoding.UTF8, "application/json");
-            var responds = await client.PostAsync("http://minionchatrestapi.azurewebsites.net/api/RemoveGroup", httpContent);
+            var responds = await client.PostAsync("http://minionchatserver.azurewebsites.net/api/RemoveGroup", httpContent);
             var result = await responds.Content.ReadAsStringAsync();
             List<string> returnval = new List<string>();
             returnval = JsonConvert.DeserializeObject<List<string>>(result);
@@ -96,7 +96,7 @@ namespace MinionChat.Client.Service
             var client = new HttpClient();
             var content = JsonConvert.SerializeObject(param);
             var httpContent = new StringContent(content, Encoding.UTF8, "application/json");
-            var responds = await client.PostAsync("http://minionchatrestapi.azurewebsites.net/api/getGroupChat", httpContent);
+            var responds = await client.PostAsync("http://minionchatserver.azurewebsites.net/api/getGroupChat", httpContent);
             var result = await responds.Content.ReadAsStringAsync();
             List<MessageInfo> returnval = new List<MessageInfo>();
             returnval = JsonConvert.DeserializeObject<List<MessageInfo>>(result);
@@ -107,7 +107,7 @@ namespace MinionChat.Client.Service
             var client = new HttpClient();
             var content = JsonConvert.SerializeObject(param);
             var httpContent = new StringContent(content, Encoding.UTF8, "application/json");
-            var responds = await client.PostAsync("http://minionchatrestapi.azurewebsites.net/api/AddChatToGroup", httpContent);
+            var responds = await client.PostAsync("http://minionchatserver.azurewebsites.net/api/AddChatToGroup", httpContent);
             var result = await responds.Content.ReadAsStringAsync();
             if (result == "false")
             {
