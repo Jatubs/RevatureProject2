@@ -37,16 +37,31 @@ namespace MinionChat.DataServer.DatabaseConnections
             return true;
         }
 
-        public async Task<List<MessageInfo>> FriendChat(string NameofGroup)
+        public async Task<List<MessageInfo>> FriendChat(string Username, string Friendname)
         {
             List<MessageInfo> message = new List<MessageInfo>();
             int idofgroup = -1;
             foreach (var group in db.ChatGroups)
             {
-                if (group.Name == NameofGroup)
+                if (group.Name == Username + Friendname || group.Name == Friendname + Username)
                 {
                     idofgroup = group.ChatGroupId;
                     break;
+                }
+            }
+
+            if(idofgroup == -1)
+            {
+                await db.ChatGroups.AddAsync(new ChatGroups() { FriendChat = true, Name = Username+Friendname });
+                await db.SaveChangesAsync();
+
+                foreach (var group in db.ChatGroups)
+                {
+                    if (group.Name == Username + Friendname || group.Name == Friendname + Username)
+                    {
+                        idofgroup = group.ChatGroupId;
+                        break;
+                    }
                 }
             }
 
@@ -59,7 +74,7 @@ namespace MinionChat.DataServer.DatabaseConnections
                         NameofSender = findUser(chatlog.UserIdofSender),
                         Message = chatlog.Message,
                         TimeofMessage = chatlog.TimeofMessage,
-                        NameofGroup = NameofGroup
+                        NameofGroup = Username+Friendname
                     });
                 }
             }

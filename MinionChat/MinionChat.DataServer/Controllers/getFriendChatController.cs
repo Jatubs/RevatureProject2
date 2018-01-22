@@ -22,7 +22,7 @@ namespace MinionChat.DataServer.Controllers
         public async Task<List<MessageInfo>> GetFriendChat(UsernameandFriendname friendtochat)
         {
             var x = new Usercontrol();
-            List<MessageInfo> ListofChat = await x.FriendChat(friendtochat.Username+friendtochat.Friendname);
+            List<MessageInfo> ListofChat = await x.FriendChat(friendtochat.Username ,friendtochat.Friendname);
             return ListofChat;
         }
 

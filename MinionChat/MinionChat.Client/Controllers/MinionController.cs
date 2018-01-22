@@ -100,7 +100,7 @@ namespace MinionChat.Client.Controllers
 
         public ActionResult UserHome(Users userswithlist)
         {
-            
+        
             return View(currentUser);
         }
         
@@ -186,19 +186,59 @@ namespace MinionChat.Client.Controllers
             testmod.Name = user.Group;
             List<string> groups = await Usercontrol.AddGroup(testmod);
             currentUser.Groups = groups;
+            Globalgroup.MyGroups = groups;
 
 
             return RedirectToAction("UserHome");
         }
-
-        public ActionResult MessageFriend(Users user, Groups group)
+        //______
+        public async Task<ActionResult> MessageFriend(Users user, Groups group)
         {
-            mlgroup.SetUsername(user.UserName);
-            mlgroup.SetName(user.Friend);
-            return RedirectToAction("AddMinion");
+
+            currentUser.Group = user.Group;
+            currentUser.Friend = user.Friend;
+            //       await Usercontrol.AddGroup()
+            Globalgroup.UserName = currentUser.UserName;
+            Globalgroup.MyGroups = currentUser.Groups;
+            Globalgroup.Group = currentUser.Group = currentUser.UserName+user.Friend;
+            List<MessageInfo> message = await Usercontrol.GetFriendChat(new FriendModel() { Friendname = user.Friend, Username = currentUser.UserName });
+    
+            Globalgroup.Messages = message;
+
+            return RedirectToAction("GroupsFriend");
+
         }
 
-        public ActionResult MessageMinion(Groups group)
+        public async Task<ActionResult> GroupsFriend(Groups group)
+        {
+            List<MessageInfo> message = await Usercontrol.GetFriendChat(new FriendModel() { Friendname = currentUser.Friend, Username = currentUser.UserName });
+            Globalgroup.Messages = message;
+            return View(Globalgroup);
+        }
+
+
+        public async Task<ActionResult> AddMessageFriend(Groups group)
+        {
+                //mlgroup.AddMessageStr(group.Message);
+                Globalgroup.Messages.Add(new MessageInfo()
+                {
+                    Message = group.Message,
+                    NameofSender = currentUser.UserName,
+                    NameofGroup = currentUser.Group,
+                    TimeofMessage = DateTime.Now
+
+                });
+                await Usercontrol.AddChatToFriend(new MessageInfo()
+                {
+                    Message = group.Message,
+                    NameofSender = currentUser.UserName,
+                    NameofGroup = currentUser.Friend
+                });
+                return RedirectToAction("GroupsFriend");
+        }
+        
+        //__________________________
+            public ActionResult MessageMinion(Groups group)
         {
             
             mlgroup.SetName(group.Minion);
@@ -260,6 +300,7 @@ namespace MinionChat.Client.Controllers
             testmod.Name = user.Group;
             List<string> groups = await Usercontrol.RemoveGroup(testmod);
             currentUser.Groups = groups;
+            Globalgroup.MyGroups = groups;
             return RedirectToAction("UserHome");
         }
     }
