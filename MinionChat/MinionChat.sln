@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MinionChat.Data", "MinionCh
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MinionChat.DataServer", "MinionChat.DataServer\MinionChat.DataServer.csproj", "{0D8F63BA-DB32-49E9-82AB-EDF4743A70DD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MinionChat.DataServerCore", "MinionChat.DataServerCore\MinionChat.DataServerCore.csproj", "{3BF5BA98-7A31-480A-937E-BB10B0756DE9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{0D8F63BA-DB32-49E9-82AB-EDF4743A70DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0D8F63BA-DB32-49E9-82AB-EDF4743A70DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0D8F63BA-DB32-49E9-82AB-EDF4743A70DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3BF5BA98-7A31-480A-937E-BB10B0756DE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BF5BA98-7A31-480A-937E-BB10B0756DE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3BF5BA98-7A31-480A-937E-BB10B0756DE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3BF5BA98-7A31-480A-937E-BB10B0756DE9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

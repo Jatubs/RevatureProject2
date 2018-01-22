@@ -288,3 +288,4 @@ __pycache__/
 *.xsd.cs
 /InterfaceForApplication
 /MinionChat/AngularAttempt
+/MinionChat/MinionChat.DataServerCore
