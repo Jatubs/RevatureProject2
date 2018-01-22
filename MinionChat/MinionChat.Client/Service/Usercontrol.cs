@@ -119,6 +119,32 @@ namespace MinionChat.Client.Service
             }
         }
 
-
+        public static async Task<bool> AddChatToFriend(MessageInfo param)
+        {
+            var client = new HttpClient();
+            var content = JsonConvert.SerializeObject(param);
+            var httpContent = new StringContent(content, Encoding.UTF8, "application/json");
+            var responds = await client.PostAsync("http://minionchatrestapi.azurewebsites.net/api/AddChatToFriend", httpContent);
+            var result = await responds.Content.ReadAsStringAsync();
+            if (result == "false")
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+        public static async Task<List<MessageInfo>> GetFriendChat(FriendModel param)
+        {
+            var client = new HttpClient();
+            var content = JsonConvert.SerializeObject(param);
+            var httpContent = new StringContent(content, Encoding.UTF8, "application/json");
+            var responds = await client.PostAsync("http://minionchatrestapi.azurewebsites.net/api/getFriendChat", httpContent);
+            var result = await responds.Content.ReadAsStringAsync();
+            List<MessageInfo> returnval = new List<MessageInfo>();
+            returnval = JsonConvert.DeserializeObject<List<MessageInfo>>(result);
+            return returnval;
+        }
     }
 }
