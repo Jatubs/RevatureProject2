@@ -52,9 +52,9 @@ namespace MinionChat.Client.Service
             var result = await responds.Content.ReadAsStringAsync();
             List<string> returnval = new List<string>();
 
-            returnval = JsonConvert.DeserializeObject<List<string>>(result);
+            return JsonConvert.DeserializeObject<List<string>>(responds.Content.ReadAsStringAsync().GetAwaiter().GetResult());
 
-            return returnval;
+            
         }
         public static async Task<List<string>> RemoveFriend(FriendModel param)
         {

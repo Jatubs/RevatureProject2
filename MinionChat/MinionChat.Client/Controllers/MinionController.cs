@@ -62,6 +62,8 @@ namespace MinionChat.Client.Controllers
                 {
                     throw new Exception();
                 }
+                currentUser.UserName = userinfo.Username;
+                currentUser.Name = userinfo.Name;
                 return RedirectToAction("UserHome");
             }
             catch (Exception ex)
@@ -86,9 +88,21 @@ namespace MinionChat.Client.Controllers
             return View(currentUser);
         }
         
-        public ActionResult AddFriend(Users user)
+        public async Task<ActionResult> AddFriend(Users user)
         {
-            mluser.AddToFriendsStr(user.Friend);
+            FriendModel newfriend = new FriendModel();
+            newfriend.Username = currentUser.UserName;
+            if (newfriend.Username == null)
+            {
+                newfriend.Username = "we";
+            }
+            newfriend.Friendname = user.Friend;
+            List<string> temp = new List<string>();
+            currentUser.Friends = await Usercontrol.Addfriend(newfriend);
+            for (int i = 0; i < temp.Count; i++)
+            {
+                mluser.Friends.Add(new Library.User(currentUser.Friends[i]));
+            }
             return RedirectToAction("UserHome");
         }
 
