@@ -39,10 +39,13 @@ namespace MinionChat.Client.Service
             var httpContent = new StringContent(content, Encoding.UTF8, "application/json");
             var responds = await client.PostAsync("http://minionchatserver.azurewebsites.net/api/Login", httpContent);
             string test = responds.Headers.ElementAt(2).Value.ElementAt(0).ToString();
-            test = test.Split('=')[0];
+            string testname = test.Split('=')[0];
+            string testid = test.Split('=')[1];
+            testid = testid.Split(';')[0];
             var result = await responds.Content.ReadAsStringAsync();
             var returnval = JsonConvert.DeserializeObject<ListofFriendandGroup>(responds.Content.ReadAsStringAsync().GetAwaiter().GetResult());
-            returnval.cookieval = test;
+            returnval.cookieval = testname;
+            returnval.cookieIDval = testid;
            return returnval;
         }
 

@@ -33,6 +33,7 @@ namespace MinionChat.Client.Controllers
 
             ListofFriendandGroup lists = await Usercontrol.Login(user);
 
+            
 
 
             if (lists.IsTheUserValid && lists.cookieval == user.Username)

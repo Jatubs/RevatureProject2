@@ -26,11 +26,7 @@ namespace MinionChat.DataServer.Controllers
 
             List<string> ListofGroup = new List<string>();
             List<string> listoffriend = new List<string>();
-            HttpCookie cookie = new HttpCookie(user.Username.ToString(), user.Username.ToString());
-            cookie.Expires = DateTime.Now.AddHours(1);
 
-            HttpContext.Current.Response.AppendCookie(cookie);
-            //HttpContext.Current.Request.Cookies.Add(cookie);
             bool login = await x.Login(user);
             if (login)
             {
@@ -43,9 +39,15 @@ namespace MinionChat.DataServer.Controllers
 
             }
 
-
+            int id = x.findUsersID(user.Username);
             ListofFriendandGroup result = new ListofFriendandGroup() { Friend = listoffriend, Group = ListofGroup };
             result.IsTheUserValid = login;
+
+            HttpCookie cookie = new HttpCookie(user.Username.ToString(), ""+id);
+            cookie.Expires = DateTime.Now.AddHours(1);
+
+            HttpContext.Current.Response.AppendCookie(cookie);
+
 
             return result;
 
